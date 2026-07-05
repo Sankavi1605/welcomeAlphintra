@@ -90,6 +90,16 @@ window.openChatbot = openChatbot;
 trigger.addEventListener("click", openChatbot);
 closeBtn.addEventListener("click", closeChatbot);
 
+// Close chatbot when clicking outside of it
+document.addEventListener("click", (e) => {
+  // Ignore clicks on buttons that explicitly open the chatbot
+  if (e.target.closest('[onclick*="openChatbot"]')) return;
+
+  if (!windowEl.classList.contains("hidden") && !container.contains(e.target)) {
+    closeChatbot();
+  }
+});
+
 async function handleSend() {
   const text = inputField.value.trim();
 
