@@ -155,34 +155,38 @@
       </div>
     </section>
 
-    <!-- Services (Section 1) -->
-    <section id="services" data-section-index="1" class="w-full h-screen snap-start snap-always flex flex-col justify-center px-6 pt-32 pb-12 bg-gradient-to-br from-black via-[#1a0033] to-[#001a66] relative overflow-hidden transition-colors duration-1000">
-      <div class="max-w-7xl mx-auto w-full relative z-10">
-        <h2 class="font-heading italic text-5xl md:text-7xl mb-12 text-center lg:text-left scroll-fade">
-          What We Build
-        </h2>
+    <!-- Spotlight Geology (Section 1) -->
+    <section id="spotlight-section" data-section-index="1" class="w-full h-screen snap-start snap-always relative overflow-hidden tracking-[-0.02em] font-sans" style="font-family: 'Inter', sans-serif;">
+      
+      <!-- 1. Base image (z-10) -->
+      <div class="absolute inset-0 bg-center bg-cover bg-no-repeat z-10" style="background-image: url('https://pub-04643188b78b434d8c44735a34b1fe23.r2.dev/17833346984c54.png');"></div>
+      
+      <!-- 2. Reveal layer (z-30) masked by spotlight.js -->
+      <div id="reveal-layer" class="absolute inset-0 bg-center bg-cover bg-no-repeat z-30 pointer-events-none" style="background-image: url('https://pub-04643188b78b434d8c44735a34b1fe23.r2.dev/1783334787f3b5.png');"></div>
 
-        <div class="grid md:grid-cols-2 gap-8 lg:gap-12">
-          <div class="liquid-glass rounded-[40px] p-8 md:p-10 hover:-translate-y-2 transition-transform duration-300 scroll-fade" style="transition-delay: 100ms;">
-            <h3 class="text-3xl font-semibold mb-4 font-heading italic">AI Systems</h3>
-            <p class="text-white/70 text-lg leading-relaxed">We architect robust LLM integrations, retrieval-augmented generation (RAG) chatbots, complex automation workflows, and specialized AI platforms tailored for enterprise needs.</p>
-          </div>
+      <!-- 3. Heading (z-50) -->
+      <div class="absolute top-[14%] left-0 right-0 flex flex-col items-center text-center px-5 pointer-events-none z-50">
+        <h1 class="text-white leading-[0.95]">
+          <span class="block font-heading italic font-normal text-5xl sm:text-7xl md:text-8xl hero-reveal" style="letter-spacing: -0.05em; text-shadow: 0 4px 20px rgba(0,0,0,0.8);">Layers hold</span>
+          <span class="block font-normal text-5xl sm:text-7xl md:text-8xl -mt-1 hero-reveal" style="letter-spacing: -0.08em; animation-delay: 0.1s; text-shadow: 0 4px 20px rgba(0,0,0,0.8);">tales of time</span>
+        </h1>
+      </div>
 
-          <div class="liquid-glass rounded-[40px] p-8 md:p-10 hover:-translate-y-2 transition-transform duration-300 scroll-fade" style="transition-delay: 300ms;">
-            <h3 class="text-3xl font-semibold mb-4 font-heading italic">Web & Mobile</h3>
-            <p class="text-white/70 text-lg leading-relaxed">From highly scalable, SEO-optimized SaaS platforms to cross-platform mobile applications, we build digital products that captivate and convert.</p>
-          </div>
+      <!-- 4. Bottom-left paragraph (z-50) -->
+      <div class="hidden sm:block absolute bottom-14 left-10 md:left-14 max-w-[260px] z-50 hero-fade" style="animation-delay: 0.3s;">
+        <p class="text-sm text-white/90 leading-relaxed font-medium drop-shadow-lg">
+          Every layer of sediment records a chapter of our planet, from ancient seabeds to drifting ash, layered across millions of years beneath us.
+        </p>
+      </div>
 
-          <div class="liquid-glass rounded-[40px] p-8 md:p-10 hover:-translate-y-2 transition-transform duration-300 scroll-fade" style="transition-delay: 100ms;">
-            <h3 class="text-3xl font-semibold mb-4 font-heading italic">Cloud & Backend</h3>
-            <p class="text-white/70 text-lg leading-relaxed">Secure, serverless architectures, robust APIs, microservices, and seamless CI/CD pipelines engineered for massive scale and perfect uptime.</p>
-          </div>
-
-          <div class="liquid-glass rounded-[40px] p-8 md:p-10 hover:-translate-y-2 transition-transform duration-300 scroll-fade" style="transition-delay: 300ms;">
-            <h3 class="text-3xl font-semibold mb-4 font-heading italic">UI/UX & 3D</h3>
-            <p class="text-white/70 text-lg leading-relaxed">We push the boundaries of digital interaction, combining sleek premium interfaces, liquid-smooth motion, and interactive 3D web environments.</p>
-          </div>
-        </div>
+      <!-- 5. Bottom-right block (z-50) -->
+      <div class="absolute bottom-10 sm:bottom-24 left-5 right-5 sm:left-auto sm:right-10 md:right-14 max-w-full sm:max-w-[260px] flex flex-col items-start gap-4 sm:gap-5 z-50 hero-fade" style="animation-delay: 0.4s;">
+        <p class="text-xs sm:text-sm text-white/90 leading-relaxed font-medium drop-shadow-lg">
+          Our interactive maps let you peel back the crust to trace how stones, fossils, and deep time combine to shape the ground beneath your feet.
+        </p>
+        <button onclick="openChatbot('Tell me more about deep time')" class="bg-[#e8702a] hover:bg-[#d2611f] text-white text-sm font-medium px-7 py-3 rounded-full transition-all hover:scale-[1.03] active:scale-95 hover:shadow-lg hover:shadow-[#e8702a]/30">
+          Start Digging
+        </button>
       </div>
     </section>
 
@@ -222,8 +226,9 @@
   <div id="chatbot-root"></div>
 
   <!-- Scripts -->
-  <script src="{% static 'js/chatbot.js' %}"></script>
+  <script src="{% static 'js/blob-bg.js' %}"></script>
   <script src="{% static 'js/scrollytelling.js' %}"></script>
-  <script type="module" src="{% static 'js/blob-bg.js' %}"></script>
+  <script src="{% static 'js/chatbot.js' %}"></script>
+  <script src="{% static 'js/spotlight.js' %}"></script>
 </body>
 </html>
