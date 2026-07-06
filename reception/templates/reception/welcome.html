@@ -97,76 +97,61 @@
   <main class="h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth">
     
     <!-- Hero (Section 0) -->
-    <section data-section-index="0" class="w-full h-screen snap-start snap-always relative overflow-hidden bg-black font-sans tracking-[-0.01em]">
-      
-      <!-- Background Image -->
-      <div class="absolute inset-0 bg-center bg-cover bg-no-repeat z-0" style="background-image: url('https://pub-04643188b78b434d8c44735a34b1fe23.r2.dev/fb3a674ed5cfe10330fec1ba04a52a36.webp');"></div>
+    <section data-section-index="0" class="w-full h-screen snap-start snap-always flex items-center justify-center px-6 pt-24">
+      <div class="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-12 items-center">
+        <div class="scroll-fade">
+          <div class="liquid-glass rounded-full inline-flex px-5 py-2 text-sm text-white/80 mb-8 mt-20">
+            AI Receptionist Online
+          </div>
 
-      <!-- Tech HUD UI Overlay -->
-      <div class="absolute inset-0 pointer-events-none z-10 hidden md:block">
-        <!-- Top line -->
-        <div class="absolute top-[88px] left-6 right-6 h-[1px] bg-white/10"></div>
-        <!-- Crosshairs -->
-        <div class="absolute top-[84px] left-6 text-white/30 text-[10px] leading-none">+</div>
-        <div class="absolute top-[84px] right-6 text-white/30 text-[10px] leading-none">+</div>
-        <div class="absolute top-1/2 left-6 text-white/30 text-[10px] leading-none -translate-y-1/2">+</div>
-        <div class="absolute top-1/2 right-6 text-white/30 text-[10px] leading-none -translate-y-1/2">+</div>
-      </div>
-
-      <!-- Content Container -->
-      <div class="absolute inset-0 max-w-7xl mx-auto w-full z-20 flex flex-col md:flex-row md:items-center justify-between pt-[120px] pb-12 px-6 lg:px-12 pointer-events-none">
-        
-        <!-- Left Column: Title & Buttons -->
-        <div class="max-w-lg mt-10 md:mt-0 scroll-fade pointer-events-auto">
-          <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-[72px] font-medium text-white leading-[1.1] tracking-tight drop-shadow-lg">
-            AI Agents <br>
-            That Think, <br>
-            <span class="text-white/60">Automate & <br>Deliver</span>
+          <h1 class="font-heading italic text-6xl md:text-8xl leading-none">
+            Welcome to <br>
+            Alphintra
           </h1>
-          
-          <div class="mt-10 flex flex-wrap gap-4 items-center">
-            <button onclick="openChatbot()" class="bg-white text-black font-medium text-sm px-7 py-3.5 rounded-full hover:scale-105 transition-transform shadow-xl">
-              Book a Demo
+
+          <p class="mt-8 max-w-xl text-lg md:text-xl text-white/80 leading-relaxed">
+            Your intelligent digital receptionist for AI, Web, Mobile, Cloud,
+            Backend, UI/UX, and 3D Engineering.
+          </p>
+
+          <div class="mt-10 flex flex-wrap gap-4">
+            <button onclick="openChatbot()" class="liquid-glass-strong rounded-full px-8 py-4 text-white font-medium hover:bg-white/10 transition-colors">
+              Start a Conversation
             </button>
-            <a href="#services" class="border border-white/30 text-white font-medium text-sm px-7 py-3.5 rounded-full hover:bg-white/10 transition-colors">
-              Learn More
+
+            <a href="#services" class="liquid-glass rounded-full px-8 py-4 text-white font-medium hover:bg-white/5 transition-colors">
+              Explore Services
             </a>
           </div>
         </div>
 
-        <!-- Right Column: Stats & Description -->
-        <div class="mt-auto md:mt-0 md:absolute md:bottom-24 md:right-12 max-w-[280px] scroll-fade pointer-events-auto" style="transition-delay: 200ms;">
-          
-          <div class="flex flex-col gap-7 mb-7">
-            <!-- Feature 1 -->
-            <div>
-              <div class="text-white/40 mb-2">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 22H22L12 2Z"/></svg>
-              </div>
-              <h3 class="text-white text-[15px] font-semibold">AI Workflow</h3>
-              <p class="text-white/50 text-xs mt-1">Automate tasks instantly</p>
+        <!-- Receptionist Card -->
+        <div class="liquid-glass rounded-[40px] p-8 md:p-10 scroll-fade lg:mt-20" style="transition-delay: 200ms;">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-16 h-16 rounded-full bg-white text-black flex items-center justify-center text-2xl font-bold font-heading italic">
+              AI
             </div>
-            
-            <!-- Feature 2 -->
             <div>
-              <div class="text-white/40 mb-2 flex gap-1.5">
-                <span class="w-1.5 h-1.5 bg-white/40 rounded-full block"></span>
-                <span class="w-1.5 h-1.5 bg-white/40 rounded-full block"></span>
-                <span class="w-1.5 h-1.5 bg-white/40 rounded-full block"></span>
-                <span class="w-1.5 h-1.5 bg-white/40 rounded-full block"></span>
-              </div>
-              <h3 class="text-white text-[15px] font-semibold">Smart AI Agents</h3>
-              <p class="text-white/50 text-xs mt-1">AI that works 24/7</p>
+              <h2 class="text-2xl font-semibold">Alphintra Assistant</h2>
+              <p class="text-green-300 text-sm flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-green-400 inline-block"></span>
+                Online now
+              </p>
             </div>
           </div>
 
-          <div class="border-t border-dashed border-white/20 pt-5">
-            <p class="text-white/60 text-[13px] leading-relaxed">
-              From customer support to content creation our AI agents handle complex workflows with speed and precision
-            </p>
+          <p class="text-white/80 text-lg leading-relaxed">
+            Hi, welcome to Alphintra. I can help you explore our services,
+            start a project discussion, or answer questions about our company.
+          </p>
+
+          <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <button onclick="openChatbot('Tell me about AI systems')" class="liquid-glass rounded-full px-4 py-3 text-sm hover:bg-white/10 transition-colors text-left">Ask about AI</button>
+            <button onclick="openChatbot('Tell me about Web Development')" class="liquid-glass rounded-full px-4 py-3 text-sm hover:bg-white/10 transition-colors text-left">Web Development</button>
+            <button onclick="openChatbot('Tell me about Cloud Systems')" class="liquid-glass rounded-full px-4 py-3 text-sm hover:bg-white/10 transition-colors text-left">Cloud Systems</button>
+            <button onclick="openChatbot('I want to start a project')" class="liquid-glass rounded-full px-4 py-3 text-sm hover:bg-white/10 transition-colors text-left">Start Project</button>
           </div>
         </div>
-
       </div>
     </section>
 
