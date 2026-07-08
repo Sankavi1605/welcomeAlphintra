@@ -99,8 +99,8 @@
     <!-- Hero (Section 0) -->
     <section data-section-index="0" class="w-full h-screen snap-start snap-always flex items-center justify-center px-6 pt-24">
       <div class="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-12 items-center">
-        <div class="scroll-fade">
-          <div class="liquid-glass rounded-full inline-flex px-5 py-2 text-sm text-white/80 mb-8 mt-20">
+        <div class="scroll-fade -translate-y-8 md:-translate-y-12">
+          <div class="liquid-glass rounded-full inline-flex px-5 py-2 text-sm text-white/80 mb-8 mt-12 md:mt-20">
             AI Receptionist Online
           </div>
 
@@ -133,10 +133,6 @@
             </div>
             <div>
               <h2 class="text-2xl font-semibold">Alphintra Assistant</h2>
-              <p class="text-green-300 text-sm flex items-center gap-2">
-                <span class="w-2 h-2 rounded-full bg-green-400 inline-block"></span>
-                Online now
-              </p>
             </div>
           </div>
 
@@ -188,17 +184,18 @@
 
     <!-- Socials (Section 2) -->
     <section id="socials" data-section-index="2" class="w-full h-screen snap-start snap-always flex flex-col justify-center px-6 pt-32 pb-12">
-      <div class="max-w-7xl mx-auto w-full liquid-glass-strong rounded-[40px] p-12 flex flex-col md:flex-row md:items-center md:justify-between gap-10 scroll-fade">
-        <div>
-          <h2 class="font-heading italic text-5xl mb-4">Connect with Alphintra</h2>
-          <p class="text-white/70 text-xl max-w-md leading-relaxed">Follow us and start your digital product journey. Our AI assistant is always ready to talk.</p>
+      <div class="max-w-7xl mx-auto w-full min-h-[50vh] liquid-glass-strong rounded-[40px] p-12 md:p-20 flex flex-col md:flex-row md:items-center md:justify-between gap-12 scroll-fade">
+        <div class="md:max-w-md">
+          <h2 class="font-heading italic text-6xl mb-6">Connect with Alphintra</h2>
+          <p class="text-white/70 text-xl leading-relaxed">Follow us and start your digital product journey. Our AI assistant is always ready to talk.</p>
         </div>
 
-        <div class="flex flex-wrap gap-4">
-          <a href="https://linkedin.com/company/alphintra" target="_blank" rel="noopener noreferrer" class="liquid-glass rounded-full px-8 py-4 hover:bg-white/10 transition-colors text-lg">LinkedIn</a>
-          <a href="https://facebook.com/alphintra" target="_blank" rel="noopener noreferrer" class="liquid-glass rounded-full px-8 py-4 hover:bg-white/10 transition-colors text-lg">Facebook</a>
-          <a href="https://instagram.com/alphintra" target="_blank" rel="noopener noreferrer" class="liquid-glass rounded-full px-8 py-4 hover:bg-white/10 transition-colors text-lg">Instagram</a>
-          <a href="https://x.com/alphintra" target="_blank" rel="noopener noreferrer" class="liquid-glass rounded-full px-8 py-4 hover:bg-white/10 transition-colors text-lg">X</a>
+        <div class="flex flex-wrap gap-4 md:justify-end">
+          <a href="https://wa.me/94740886002" target="_blank" rel="noopener noreferrer" class="liquid-glass rounded-full px-8 py-4 hover:bg-white/10 transition-colors text-lg font-medium">WhatsApp</a>
+          <a href="https://linkedin.com/company/alphintra" target="_blank" rel="noopener noreferrer" class="liquid-glass rounded-full px-8 py-4 hover:bg-white/10 transition-colors text-lg font-medium">LinkedIn</a>
+          <a href="https://web.facebook.com/profile.php?id=61589295980353" target="_blank" rel="noopener noreferrer" class="liquid-glass rounded-full px-8 py-4 hover:bg-white/10 transition-colors text-lg font-medium">Facebook</a>
+          <a href="https://instagram.com/alphintra" target="_blank" rel="noopener noreferrer" class="liquid-glass rounded-full px-8 py-4 hover:bg-white/10 transition-colors text-lg font-medium">Instagram</a>
+          <a href="https://x.com/alphintra_ai" target="_blank" rel="noopener noreferrer" class="liquid-glass rounded-full px-8 py-4 hover:bg-white/10 transition-colors text-lg font-medium">X</a>
         </div>
       </div>
     </section>
@@ -210,9 +207,14 @@
         <p class="text-xl md:text-2xl text-white/90 mb-12 drop-shadow-lg font-medium">
           Join the startups and enterprises architecting next-generation platforms with Alphintra.
         </p>
-        <button onclick="openChatbot('Let\'s start a project')" class="liquid-glass-strong rounded-full px-12 py-5 text-white font-semibold text-lg hover:bg-white/20 transition-colors shadow-2xl">
-          Start Your Project
-        </button>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-6 mt-12">
+          <button onclick="openChatbot('Let\'s start a project')" class="liquid-glass-strong rounded-full px-12 py-5 text-white font-semibold text-lg hover:bg-white/20 transition-colors shadow-2xl">
+            Start Your Project
+          </button>
+          <a href="https://alphintra.com" target="_blank" class="liquid-glass rounded-full px-12 py-5 text-white font-semibold text-lg hover:bg-white/10 transition-colors">
+            Visit Alphintra.com
+          </a>
+        </div>
       </div>
     </section>
 
