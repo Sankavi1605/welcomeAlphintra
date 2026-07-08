@@ -331,8 +331,8 @@ scene.add(ringMesh);
 const blobTargets = [
     { x: -1.0, y: -0.2, scale: 1.0 }, // Section 0: Hero
     { x: 0.0, y: 0.0, scale: 1.0 },   // Section 1: Services (Hidden)
-    { x: 0.0, y: 0.0, scale: 1.0 },   // Section 2: Socials (Hidden)
-    { x: 0.0, y: 0.0, scale: 2.0 }    // Section 3: CTA (Half Zoomed in)
+    { x: 0.0, y: 0.0, scale: 1.1 },   // Section 2: Socials (Center)
+    { x: 0.0, y: 0.2, scale: 1.7 }    // Section 3: CTA (Zoomed in nicely)
 ];
 
 const ringTargets = { x: 0.0, y: 0.0, scale: 1.5 }; // Default Socials scale
@@ -363,17 +363,17 @@ window.addEventListener('sectionChanged', (e) => {
         // Services Section -> Hide Canvas to show CSS Gradient Background
         canvas.style.opacity = '0'; // Smoothly fades out via Tailwind transition-opacity
     } else if (index === 2) {
-        // Socials Section -> Show Ring
+        // Socials Section -> Show Blob Center
         canvas.style.opacity = '1';
-        blobMesh.visible = false;
-        ringMesh.visible = true;
-        currentRingTarget = { x: 0.0, y: 0.0, scale: 1.5 };
+        blobMesh.visible = true;
+        ringMesh.visible = false;
+        currentBlobTarget = blobTargets[2];
     } else if (index === 3) {
-        // CTA Section -> Show Ring Zoomed In
+        // CTA Section -> Show Blob Zoomed In
         canvas.style.opacity = '1';
-        blobMesh.visible = false;
-        ringMesh.visible = true;
-        currentRingTarget = { x: 0.0, y: 0.0, scale: 3.5 };
+        blobMesh.visible = true;
+        ringMesh.visible = false;
+        currentBlobTarget = blobTargets[3];
     }
 });
 
