@@ -335,15 +335,16 @@ const blobTargets = [
     { x: 0.0, y: 0.0, scale: 2.0 }    // Section 3: CTA (Half Zoomed in)
 ];
 
-const ringTargets = { x: 0.0, y: 0.0, scale: 1.5 }; // Center it
+const ringTargets = { x: 0.0, y: 0.0, scale: 1.5 }; // Default Socials scale
+let currentRingTarget = { ...ringTargets };
 
 let currentBlobTarget = blobTargets[0];
 
 blobMesh.position.set(currentBlobTarget.x, currentBlobTarget.y, 0);
 blobMesh.scale.set(currentBlobTarget.scale, currentBlobTarget.scale, currentBlobTarget.scale);
 
-ringMesh.position.set(ringTargets.x, ringTargets.y, 0);
-ringMesh.scale.set(ringTargets.scale, ringTargets.scale, ringTargets.scale);
+ringMesh.position.set(currentRingTarget.x, currentRingTarget.y, 0);
+ringMesh.scale.set(currentRingTarget.scale, currentRingTarget.scale, currentRingTarget.scale);
 ringMesh.visible = false; // Hidden initially
 
 let currentActiveModel = blobMesh;
@@ -366,12 +367,13 @@ window.addEventListener('sectionChanged', (e) => {
         canvas.style.opacity = '1';
         blobMesh.visible = false;
         ringMesh.visible = true;
+        currentRingTarget = { x: 0.0, y: 0.0, scale: 1.5 };
     } else if (index === 3) {
-        // CTA Section -> Show Blob Zoomed In
+        // CTA Section -> Show Ring Zoomed In
         canvas.style.opacity = '1';
-        blobMesh.visible = true;
-        ringMesh.visible = false;
-        currentBlobTarget = blobTargets[3];
+        blobMesh.visible = false;
+        ringMesh.visible = true;
+        currentRingTarget = { x: 0.0, y: 0.0, scale: 3.5 };
     }
 });
 
@@ -420,6 +422,11 @@ function animate() {
     blobMesh.scale.x += (currentBlobTarget.scale - blobMesh.scale.x) * 0.04;
     blobMesh.scale.y += (currentBlobTarget.scale - blobMesh.scale.y) * 0.04;
     blobMesh.scale.z += (currentBlobTarget.scale - blobMesh.scale.z) * 0.04;
+
+    // Smoothly interpolate the ring's scale towards the target
+    ringMesh.scale.x += (currentRingTarget.scale - ringMesh.scale.x) * 0.04;
+    ringMesh.scale.y += (currentRingTarget.scale - ringMesh.scale.y) * 0.04;
+    ringMesh.scale.z += (currentRingTarget.scale - ringMesh.scale.z) * 0.04;
 
     if (blobMesh.visible) {
         blobMesh.rotation.y += 0.001;

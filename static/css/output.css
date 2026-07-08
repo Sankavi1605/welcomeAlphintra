@@ -749,8 +749,8 @@ video {
   height: 100vh;
 }
 
-.min-h-\[50vh\] {
-  min-height: 50vh;
+.min-h-\[65vh\] {
+  min-height: 65vh;
 }
 
 .w-1\.5 {
@@ -1033,6 +1033,11 @@ video {
   padding-bottom: 0.5rem;
 }
 
+.py-20 {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
 .py-3 {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
@@ -1211,6 +1216,12 @@ video {
   outline-offset: 2px;
 }
 
+.ring {
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
 .blur {
   --tw-blur: blur(8px);
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
@@ -1353,8 +1364,8 @@ video {
     padding: 2.5rem;
   }
 
-  .md\:p-20 {
-    padding: 5rem;
+  .md\:p-24 {
+    padding: 6rem;
   }
 
   .md\:text-2xl {
