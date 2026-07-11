@@ -54,7 +54,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const event = new CustomEvent('sectionChanged', { detail: { index: newIndex } });
             window.dispatchEvent(event);
         } else {
-            // Drop curtain down to cover screen
+            // Step 1: Drop curtain down to cover screen
+            curtain.style.transitionDuration = '700ms';
             curtain.style.transform = 'translateY(0)';
             
             // Wait for curtain to drop, then swap content instantly
@@ -77,12 +78,22 @@ document.addEventListener("DOMContentLoaded", () => {
                 const event = new CustomEvent('sectionChanged', { detail: { index: newIndex } });
                 window.dispatchEvent(event);
 
-                // Give DOM a tick, then pull curtain up
+                // Give DOM a tick, then continue curtain downward to 100%
                 setTimeout(() => {
-                    curtain.style.transform = 'translateY(-100%)';
+                    curtain.style.transform = 'translateY(100%)';
                     
-                    // Release scrolling lock after curtain finishes rising
+                    // Wait for curtain to exit at the bottom
                     setTimeout(() => {
+                        // Disable transition to jump instantly without animating
+                        curtain.style.transitionDuration = '0ms';
+                        curtain.style.transform = 'translateY(-100%)';
+                        
+                        // Force a reflow so the browser registers the instant jump
+                        void curtain.offsetHeight;
+                        
+                        // Restore transition duration for next time
+                        curtain.style.transitionDuration = '700ms';
+                        
                         isAnimating = false;
                     }, 700); // Wait for transition duration of curtain
                 }, 50);
