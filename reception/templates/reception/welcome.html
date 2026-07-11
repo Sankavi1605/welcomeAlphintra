@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-  <link href="{% static 'css/output.css' %}?v=15" rel="stylesheet">
+  <link href="{% static 'css/output.css' %}?v=18" rel="stylesheet">
 
   <style>
     body {
@@ -34,6 +34,32 @@
       border: 1px solid rgba(255, 255, 255, 0.1);
       box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
     }
+    /* ── Curtain Transition ── */
+    #curtain-clip {
+      position: absolute;
+      inset: 0;
+      border-radius: 40px;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 60;
+    }
+    #page-curtain {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #000000 0%, #0a0a2a 50%, #3b0080 100%);
+      transform: translateY(-100%);
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: none;
+    }
+    #page-curtain.active {
+      transform: translateY(0);
+    }
+    #page-curtain.exit {
+      transform: translateY(100%);
+    }
   </style>
   
   <!-- Three.js import map -->
@@ -56,10 +82,10 @@
   <div class="fixed inset-0 z-10 pointer-events-none flex items-center justify-center py-4 pl-4 pr-[100px] md:py-8 md:pl-8 md:pr-[180px] lg:py-12 lg:pl-12 lg:pr-[220px]">
     
     <div id="kiosk-window" class="w-full max-w-[1300px] h-full max-h-[900px] liquid-glass rounded-[40px] border border-white/20 shadow-[0_0_80px_-20px_rgba(100,50,255,0.3)] pointer-events-auto flex flex-col relative transition-colors duration-1000">
-      
-      <!-- Curtain Transition Layer Wrapper (Clips the curtain to the window bounds) -->
-      <div class="absolute inset-0 z-[60] pointer-events-none rounded-[40px] overflow-hidden">
-        <div id="page-curtain" class="absolute inset-0 bg-gradient-to-br from-black via-[#0a0a2a] to-[#3b0080] -translate-y-full transition-transform duration-[700ms] ease-[cubic-bezier(0.76,0,0.24,1)]"></div>
+
+      <!-- Curtain: clipped to kiosk card only -->
+      <div id="curtain-clip">
+        <div id="page-curtain"></div>
       </div>
       
       <!-- Fixed Right Side Section Number Indicator (Locked to Card Border) -->
@@ -208,8 +234,8 @@
   </div>
 
   <!-- Scripts -->
-  <script src="{% static 'js/chatbot.js' %}?v=15"></script>
-  <script src="{% static 'js/scrollytelling.js' %}?v=15"></script>
-  <script type="module" src="{% static 'js/blob-bg.js' %}?v=15"></script>
+  <script src="{% static 'js/chatbot.js' %}?v=18"></script>
+  <script src="{% static 'js/scrollytelling.js' %}?v=18"></script>
+  <script type="module" src="{% static 'js/blob-bg.js' %}?v=18"></script>
 </body>
 </html>
