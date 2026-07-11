@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-  <link href="{% static 'css/output.css' %}?v=10" rel="stylesheet">
+  <link href="{% static 'css/output.css' %}?v=11" rel="stylesheet">
 
   <style>
     body {
@@ -59,7 +59,7 @@
       
       <!-- Curtain Transition Layer Wrapper (Clips the curtain to the window bounds) -->
       <div class="absolute inset-0 z-[60] pointer-events-none rounded-[40px] overflow-hidden">
-        <div id="page-curtain" class="absolute inset-0 bg-gradient-to-br from-black via-[#0a0a2a] to-[#3b0080] -translate-y-full transition-transform duration-[700ms] ease-[cubic-bezier(0.76,0,0.24,1)]"></div>
+        <div id="page-curtain" class="absolute inset-0 bg-gradient-to-br from-black/70 via-[#0a0a2a]/70 to-[#3b0080]/70 backdrop-blur-[30px] border-b border-white/20 shadow-2xl -translate-y-full transition-transform duration-[700ms] ease-[cubic-bezier(0.76,0,0.24,1)]"></div>
       </div>
       
       <!-- Fixed Right Side Section Number Indicator (Locked to Card Border) -->
@@ -208,8 +208,8 @@
   </div>
 
   <!-- Scripts -->
-  <script src="{% static 'js/chatbot.js' %}?v=10"></script>
-  <script src="{% static 'js/scrollytelling.js' %}?v=10"></script>
-  <script type="module" src="{% static 'js/blob-bg.js' %}?v=10"></script>
+  <script src="{% static 'js/chatbot.js' %}?v=11"></script>
+  <script src="{% static 'js/scrollytelling.js' %}?v=11"></script>
+  <script type="module" src="{% static 'js/blob-bg.js' %}?v=11"></script>
 </body>
 </html>
