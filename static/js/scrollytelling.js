@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
 
     const numberTrack = document.getElementById('section-number-track');
-    const strips = document.querySelectorAll('.curtain-strip');
+    const curtain = document.getElementById('page-curtain');
 
     function updateSlides(newIndex, isInitial = false) {
         if (!isInitial && newIndex === currentIndex) return;
@@ -38,8 +38,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const oldIndex = currentIndex;
         currentIndex = newIndex;
 
-        if (isInitial || strips.length === 0) {
-            // Initial setup or fallback
+        if (isInitial || !curtain) {
+            // Initial setup or fallback: no curtain
             slides.forEach((slide, index) => {
                 if (!slide) return;
                 slide.style.transitionDuration = '0ms'; // Disable CSS transitions for instant swap
@@ -54,12 +54,10 @@ document.addEventListener("DOMContentLoaded", () => {
             const event = new CustomEvent('sectionChanged', { detail: { index: newIndex } });
             window.dispatchEvent(event);
         } else {
-            // Drop staggered curtain strips down to cover screen
-            strips.forEach(strip => {
-                strip.style.transform = 'translateY(0)';
-            });
+            // Drop curtain down to cover screen
+            curtain.style.transform = 'translateY(0)';
             
-            // Wait for curtain to drop completely (600ms duration + 300ms max delay = 900ms)
+            // Wait for curtain to drop, then swap content instantly
             setTimeout(() => {
                 slides.forEach((slide, index) => {
                     if (!slide) return;
@@ -81,16 +79,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 // Give DOM a tick, then pull curtain up
                 setTimeout(() => {
-                    strips.forEach(strip => {
-                        strip.style.transform = 'translateY(-100%)';
-                    });
+                    curtain.style.transform = 'translateY(-100%)';
                     
                     // Release scrolling lock after curtain finishes rising
                     setTimeout(() => {
                         isAnimating = false;
-                    }, 900); 
+                    }, 700); // Wait for transition duration of curtain
                 }, 50);
-            }, 900);
+            }, 700); // Match curtain transition duration in HTML (700ms)
         }
     }
 
