@@ -1,0 +1,229 @@
+﻿{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome to Alphintra</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link href="{% static 'css/output.css' %}" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Barlow', sans-serif;
+      background-color: #000;
+      color: #fff;
+    }
+
+    .font-heading {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+    }
+
+    .liquid-glass {
+      background: rgba(255,255,255,0.02);
+      background-blend-mode: luminosity;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: inset 0 1px 1px rgba(255,255,255,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .liquid-glass-strong {
+      background: rgba(255,255,255,0.05);
+      background-blend-mode: luminosity;
+      backdrop-filter: blur(50px);
+      -webkit-backdrop-filter: blur(50px);
+      border: 1px solid rgba(255,255,255,0.15);
+      box-shadow:
+        4px 4px 10px rgba(0,0,0,0.5),
+        inset 0 1px 1px rgba(255,255,255,0.2);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    /* Ensure content is positioned over the 3D canvas */
+    main {
+      position: relative;
+      z-index: 10;
+      /* Hide scrollbar for cleaner look */
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    main::-webkit-scrollbar {
+      display: none;
+    }
+  </style>
+
+  <!-- Three.js Import Map -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.150.1/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+
+<body class="h-screen overflow-hidden">
+
+  <!-- Navbar (Fixed to stay at top during scrolling) -->
+  <nav class="fixed top-0 left-0 right-0 z-50 max-w-7xl mx-auto px-6 py-6 transition-all duration-500">
+    <div class="liquid-glass rounded-full px-6 py-4 flex items-center justify-between">
+      <a href="/" class="font-heading italic text-2xl font-bold tracking-wider">
+        Alphintra
+      </a>
+
+      <div class="hidden md:flex items-center gap-6 text-sm text-white/80">
+        <a href="#services" class="hover:text-white transition-colors">Services</a>
+        <a href="#about" class="hover:text-white transition-colors">About</a>
+        <a href="#socials" class="hover:text-white transition-colors">Socials</a>
+        <button onclick="openChatbot()" class="liquid-glass-strong rounded-full px-5 py-2 text-white hover:bg-white/10 transition-colors">
+          Chat Now
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main container with scroll snapping -->
+  <main class="h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth">
+    
+    <!-- Hero (Section 0) -->
+    <section data-section-index="0" class="w-full h-screen snap-start flex items-center justify-center px-6 pt-24">
+      <div class="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-12 items-center">
+        <div class="scroll-fade">
+          <div class="liquid-glass rounded-full inline-flex px-5 py-2 text-sm text-white/80 mb-8 mt-20">
+            AI Receptionist Online
+          </div>
+
+          <h1 class="font-heading italic text-6xl md:text-8xl leading-none">
+            Welcome to <br>
+            Alphintra
+          </h1>
+
+          <p class="mt-8 max-w-xl text-lg md:text-xl text-white/80 leading-relaxed">
+            Your intelligent digital receptionist for AI, Web, Mobile, Cloud,
+            Backend, UI/UX, and 3D Engineering.
+          </p>
+
+          <div class="mt-10 flex flex-wrap gap-4">
+            <button onclick="openChatbot()" class="liquid-glass-strong rounded-full px-8 py-4 text-white font-medium hover:bg-white/10 transition-colors">
+              Start a Conversation
+            </button>
+
+            <a href="#services" class="liquid-glass rounded-full px-8 py-4 text-white font-medium hover:bg-white/5 transition-colors">
+              Explore Services
+            </a>
+          </div>
+        </div>
+
+        <!-- Receptionist Card -->
+        <div class="liquid-glass rounded-[40px] p-8 md:p-10 scroll-fade lg:mt-20" style="transition-delay: 200ms;">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="w-16 h-16 rounded-full bg-white text-black flex items-center justify-center text-2xl font-bold font-heading italic">
+              AI
+            </div>
+            <div>
+              <h2 class="text-2xl font-semibold">Alphintra Assistant</h2>
+              <p class="text-green-300 text-sm flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-green-400 inline-block"></span>
+                Online now
+              </p>
+            </div>
+          </div>
+
+          <p class="text-white/80 text-lg leading-relaxed">
+            Hi, welcome to Alphintra. I can help you explore our services,
+            start a project discussion, or answer questions about our company.
+          </p>
+
+          <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <button onclick="openChatbot('Tell me about AI systems')" class="liquid-glass rounded-full px-4 py-3 text-sm hover:bg-white/10 transition-colors text-left">Ask about AI</button>
+            <button onclick="openChatbot('Tell me about Web Development')" class="liquid-glass rounded-full px-4 py-3 text-sm hover:bg-white/10 transition-colors text-left">Web Development</button>
+            <button onclick="openChatbot('Tell me about Cloud Systems')" class="liquid-glass rounded-full px-4 py-3 text-sm hover:bg-white/10 transition-colors text-left">Cloud Systems</button>
+            <button onclick="openChatbot('I want to start a project')" class="liquid-glass rounded-full px-4 py-3 text-sm hover:bg-white/10 transition-colors text-left">Start Project</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services (Section 1) -->
+    <section id="services" data-section-index="1" class="w-full h-screen snap-start flex flex-col justify-center px-6 pt-32 pb-12 bg-gradient-to-br from-[#00051a] via-[#26004d] to-[#002b80] relative overflow-hidden transition-colors duration-1000">
+      <div class="max-w-7xl mx-auto w-full relative z-10">
+        <h2 class="font-heading italic text-5xl md:text-7xl mb-12 text-center lg:text-left scroll-fade">
+          What We Build
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-8 lg:gap-12">
+          <div class="liquid-glass rounded-[40px] p-8 md:p-10 hover:-translate-y-2 transition-transform duration-300 scroll-fade" style="transition-delay: 100ms;">
+            <h3 class="text-3xl font-semibold mb-4 font-heading italic">AI Systems</h3>
+            <p class="text-white/70 text-lg leading-relaxed">We architect robust LLM integrations, retrieval-augmented generation (RAG) chatbots, complex automation workflows, and specialized AI platforms tailored for enterprise needs.</p>
+          </div>
+
+          <div class="liquid-glass rounded-[40px] p-8 md:p-10 hover:-translate-y-2 transition-transform duration-300 scroll-fade" style="transition-delay: 300ms;">
+            <h3 class="text-3xl font-semibold mb-4 font-heading italic">Web & Mobile</h3>
+            <p class="text-white/70 text-lg leading-relaxed">From highly scalable, SEO-optimized SaaS platforms to cross-platform mobile applications, we build digital products that captivate and convert.</p>
+          </div>
+
+          <div class="liquid-glass rounded-[40px] p-8 md:p-10 hover:-translate-y-2 transition-transform duration-300 scroll-fade" style="transition-delay: 100ms;">
+            <h3 class="text-3xl font-semibold mb-4 font-heading italic">Cloud & Backend</h3>
+            <p class="text-white/70 text-lg leading-relaxed">Secure, serverless architectures, robust APIs, microservices, and seamless CI/CD pipelines engineered for massive scale and perfect uptime.</p>
+          </div>
+
+          <div class="liquid-glass rounded-[40px] p-8 md:p-10 hover:-translate-y-2 transition-transform duration-300 scroll-fade" style="transition-delay: 300ms;">
+            <h3 class="text-3xl font-semibold mb-4 font-heading italic">UI/UX & 3D</h3>
+            <p class="text-white/70 text-lg leading-relaxed">We push the boundaries of digital interaction, combining sleek premium interfaces, liquid-smooth motion, and interactive 3D web environments.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Socials (Section 2) -->
+    <section id="socials" data-section-index="2" class="w-full h-screen snap-start flex flex-col justify-center px-6 pt-32 pb-12">
+      <div class="max-w-7xl mx-auto w-full liquid-glass-strong rounded-[40px] p-12 flex flex-col md:flex-row md:items-center md:justify-between gap-10 scroll-fade">
+        <div>
+          <h2 class="font-heading italic text-5xl mb-4">Connect with Alphintra</h2>
+          <p class="text-white/70 text-xl max-w-md leading-relaxed">Follow us and start your digital product journey. Our AI assistant is always ready to talk.</p>
+        </div>
+
+        <div class="flex flex-wrap gap-4">
+          <a href="https://linkedin.com/company/alphintra" target="_blank" rel="noopener noreferrer" class="liquid-glass rounded-full px-8 py-4 hover:bg-white/10 transition-colors text-lg">LinkedIn</a>
+          <a href="https://facebook.com/alphintra" target="_blank" rel="noopener noreferrer" class="liquid-glass rounded-full px-8 py-4 hover:bg-white/10 transition-colors text-lg">Facebook</a>
+          <a href="https://instagram.com/alphintra" target="_blank" rel="noopener noreferrer" class="liquid-glass rounded-full px-8 py-4 hover:bg-white/10 transition-colors text-lg">Instagram</a>
+          <a href="https://x.com/alphintra" target="_blank" rel="noopener noreferrer" class="liquid-glass rounded-full px-8 py-4 hover:bg-white/10 transition-colors text-lg">X</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA (Section 3) -->
+    <section id="cta" data-section-index="3" class="w-full h-screen snap-start flex flex-col justify-center px-6 pt-32 pb-12">
+      <div class="max-w-4xl mx-auto w-full text-center relative z-10 scroll-fade">
+        <h2 class="font-heading italic text-6xl md:text-8xl mb-8 drop-shadow-2xl">Ready to Build?</h2>
+        <p class="text-xl md:text-2xl text-white/90 mb-12 drop-shadow-lg font-medium">
+          Join the startups and enterprises architecting next-generation platforms with Alphintra.
+        </p>
+        <button onclick="openChatbot('Let\'s start a project')" class="liquid-glass-strong rounded-full px-12 py-5 text-white font-semibold text-lg hover:bg-white/20 transition-colors shadow-2xl">
+          Start Your Project
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Chatbot root -->
+  <div id="chatbot-root"></div>
+
+  <!-- Scripts -->
+  <script src="{% static 'js/chatbot.js' %}"></script>
+  <script src="{% static 'js/scrollytelling.js' %}"></script>
+  <script type="module" src="{% static 'js/blob-bg.js' %}"></script>
+</body>
+</html>
