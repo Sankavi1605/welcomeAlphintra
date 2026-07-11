@@ -10,12 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById('content-3')
     ];
 
-    const dots = [
-        document.getElementById('nav-dot-0'),
-        document.getElementById('nav-dot-1'),
-        document.getElementById('nav-dot-2'),
-        document.getElementById('nav-dot-3')
-    ];
+    const numberTrack = document.getElementById('section-number-track');
 
     function updateSlides(newIndex, isInitial = false) {
         if (!isInitial && newIndex === currentIndex) return;
@@ -23,17 +18,21 @@ document.addEventListener("DOMContentLoaded", () => {
         
         if (!isInitial) isAnimating = true;
         
-        // Update dots
-        dots.forEach((dot, i) => {
-            if (!dot) return;
-            if (i === newIndex) {
-                dot.classList.remove('text-white/30');
-                dot.classList.add('text-white', 'scale-110');
-            } else {
-                dot.classList.add('text-white/30');
-                dot.classList.remove('text-white', 'scale-110');
-            }
-        });
+        // Update sliding number track
+        if (numberTrack) {
+            numberTrack.style.transform = `translateY(-${newIndex * 25}%)`;
+            
+            const children = Array.from(numberTrack.children);
+            children.forEach((child, i) => {
+                if (i === newIndex) {
+                    child.classList.remove('text-white/30');
+                    child.classList.add('text-white', 'scale-110');
+                } else {
+                    child.classList.add('text-white/30');
+                    child.classList.remove('text-white', 'scale-110');
+                }
+            });
+        }
 
         const oldIndex = currentIndex;
         currentIndex = newIndex;
