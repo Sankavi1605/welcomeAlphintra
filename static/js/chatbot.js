@@ -2,195 +2,65 @@ const API_URL = "https://chatbot-backend-452555374554.us-central1.run.app/api/v1
 
 function getOrInitializeSession() {
   let sessionId = sessionStorage.getItem("chatbot_session_id");
+
   if (!sessionId) {
     sessionId = crypto.randomUUID();
     sessionStorage.setItem("chatbot_session_id", sessionId);
   }
+
   return sessionId;
 }
 
 const sessionId = getOrInitializeSession();
 let conversationHistory = [];
 
-// Inject global chatbot styles
-const styleEl = document.createElement('style');
-styleEl.textContent = `
-  #chatbot-window {
-    background: linear-gradient(160deg, rgba(15,10,30,0.97) 0%, rgba(8,6,20,0.99) 100%);
-    backdrop-filter: blur(40px);
-    -webkit-backdrop-filter: blur(40px);
-    border: 1px solid rgba(255,255,255,0.08);
-    box-shadow: 0 30px 80px -10px rgba(0,0,0,0.9), 0 0 0 1px rgba(150,80,255,0.1), inset 0 1px 0 rgba(255,255,255,0.06);
-    transform-origin: bottom right;
-    transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), opacity 0.25s ease;
-  }
-  #chatbot-window.cb-open {
-    transform: scale(1) translateY(0);
-    opacity: 1;
-    pointer-events: all;
-  }
-  #chatbot-window.cb-closed {
-    transform: scale(0.88) translateY(16px);
-    opacity: 0;
-    pointer-events: none;
-  }
-  #chatbot-trigger {
-    background: linear-gradient(135deg, #6c2bd9, #3b0fa0);
-    border: 1px solid rgba(255,255,255,0.15);
-    box-shadow: 0 8px 32px rgba(108,43,217,0.6), 0 2px 8px rgba(0,0,0,0.4);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-  #chatbot-trigger:hover {
-    transform: scale(1.08);
-    box-shadow: 0 12px 40px rgba(108,43,217,0.8), 0 2px 8px rgba(0,0,0,0.4);
-  }
-  #chatbot-header {
-    background: linear-gradient(180deg, rgba(108,43,217,0.18) 0%, transparent 100%);
-    border-bottom: 1px solid rgba(255,255,255,0.07);
-  }
-  #chatbot-messages {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(255,255,255,0.1) transparent;
-  }
-  #chatbot-messages::-webkit-scrollbar { width: 4px; }
-  #chatbot-messages::-webkit-scrollbar-track { background: transparent; }
-  #chatbot-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 99px; }
-  .msg-user {
-    background: linear-gradient(135deg, #7c3aed, #4f46e5);
-    border: 1px solid rgba(255,255,255,0.12);
-    box-shadow: 0 4px 16px rgba(109,40,217,0.35);
-    color: #fff;
-    align-self: flex-end;
-    border-bottom-right-radius: 4px;
-  }
-  .msg-bot {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.08);
-    box-shadow: 0 2px 12px rgba(0,0,0,0.2);
-    color: rgba(255,255,255,0.88);
-    align-self: flex-start;
-    border-bottom-left-radius: 4px;
-  }
-  .msg-bubble {
-    max-width: 82%;
-    padding: 12px 16px;
-    border-radius: 18px;
-    font-size: 14px;
-    line-height: 1.6;
-    letter-spacing: 0.01em;
-  }
-  #chatbot-input-area {
-    background: rgba(255,255,255,0.03);
-    border-top: 1px solid rgba(255,255,255,0.07);
-  }
-  #chatbot-input {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.1);
-    color: #fff;
-    font-size: 14px;
-    transition: border-color 0.2s, background 0.2s;
-    outline: none;
-  }
-  #chatbot-input::placeholder { color: rgba(255,255,255,0.3); }
-  #chatbot-input:focus {
-    background: rgba(255,255,255,0.09);
-    border-color: rgba(124,58,237,0.7);
-    box-shadow: 0 0 0 3px rgba(124,58,237,0.12);
-  }
-  #chatbot-send {
-    background: linear-gradient(135deg, #7c3aed, #4f46e5);
-    border: none;
-    transition: transform 0.15s, box-shadow 0.15s;
-    box-shadow: 0 4px 16px rgba(109,40,217,0.5);
-  }
-  #chatbot-send:hover {
-    transform: scale(1.06);
-    box-shadow: 0 6px 20px rgba(109,40,217,0.7);
-  }
-  #chatbot-send:active { transform: scale(0.97); }
-  .typing-dot {
-    width: 6px; height: 6px;
-    background: rgba(255,255,255,0.5);
-    border-radius: 50%;
-    animation: typingBounce 1.2s infinite ease-in-out;
-  }
-  .typing-dot:nth-child(2) { animation-delay: 0.18s; }
-  .typing-dot:nth-child(3) { animation-delay: 0.36s; }
-  @keyframes typingBounce {
-    0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
-    30% { transform: translateY(-6px); opacity: 1; }
-  }
-  .msg-slide-in {
-    animation: msgSlideIn 0.28s cubic-bezier(0.34,1.2,0.64,1) both;
-  }
-  @keyframes msgSlideIn {
-    from { opacity: 0; transform: translateY(10px) scale(0.96); }
-    to   { opacity: 1; transform: translateY(0) scale(1); }
-  }
-`;
-document.head.appendChild(styleEl);
-
 const chatbotRoot = document.getElementById("chatbot-root");
-chatbotRoot.innerHTML = `
-  <div id="chatbot-container" style="position:fixed;bottom:24px;right:24px;z-index:9999;">
 
-    <!-- Trigger FAB -->
-    <button id="chatbot-trigger" style="width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;">
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-      </svg>
+chatbotRoot.innerHTML = `
+  <div id="chatbot-container" class="fixed bottom-6 right-6 z-[9999] font-sans">
+    <button id="chatbot-trigger"
+      class="liquid-glass-strong w-16 h-16 rounded-full text-white text-2xl flex items-center justify-center shadow-[0_10px_40px_rgba(150,50,255,0.4)] hover:bg-white/20 transition-all hover:scale-105">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
     </button>
 
-    <!-- Chat Window -->
-    <div id="chatbot-window" class="cb-closed" style="position:absolute;bottom:72px;right:0;width:380px;max-width:calc(100vw - 32px);height:580px;border-radius:28px;display:flex;flex-direction:column;overflow:hidden;">
+    <div id="chatbot-window"
+      class="hidden w-[380px] max-w-[calc(100vw-32px)] h-[600px] bg-black/40 backdrop-blur-3xl border border-white/10 shadow-[0_20px_60px_-10px_rgba(0,0,0,0.8)] rounded-[32px] overflow-hidden flex-col transition-all duration-300 origin-bottom-right scale-95 opacity-0">
 
       <!-- Header -->
-      <div id="chatbot-header" style="padding:20px 20px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
-        <div style="display:flex;align-items:center;gap:12px;">
-          <div style="width:40px;height:40px;border-radius:14px;background:linear-gradient(135deg,#7c3aed,#4f46e5);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(109,40,217,0.5);">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-            </svg>
-          </div>
-          <div>
-            <div style="color:#fff;font-size:15px;font-weight:600;letter-spacing:-0.01em;">Alphintra AI</div>
-            <div style="display:flex;align-items:center;gap:5px;margin-top:2px;">
-              <span style="width:7px;height:7px;border-radius:50%;background:#22c55e;box-shadow:0 0 6px #22c55e;display:inline-block;"></span>
-              <span style="font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:0.04em;">Online · Ready to help</span>
-            </div>
-          </div>
+      <div class="px-6 py-5 border-b border-white/10 flex items-center justify-between bg-gradient-to-b from-white/10 to-transparent">
+        <div>
+          <h3 class="font-heading italic text-3xl text-white drop-shadow-md">Alphintra AI</h3>
+          <p class="text-[11px] text-white/60 flex items-center gap-2 mt-1.5 font-medium tracking-widest uppercase">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+            </span>
+            Online
+          </p>
         </div>
-        <button id="chatbot-close" style="width:32px;height:32px;border-radius:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.5);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.12)'" onmouseout="this.style.background='rgba(255,255,255,0.06)'">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
+        <button id="chatbot-close" class="w-8 h-8 rounded-full bg-white/5 hover:bg-white/20 flex items-center justify-center text-white/70 hover:text-white transition-all text-xl pb-0.5">&times;</button>
       </div>
 
       <!-- Messages -->
-      <div id="chatbot-messages" style="flex:1;overflow-y:auto;padding:12px 16px;display:flex;flex-direction:column;gap:10px;">
-        <div class="msg-bubble msg-bot msg-slide-in">
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-            <div style="width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,#7c3aed,#4f46e5);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-            </div>
-            <span style="font-size:11px;color:rgba(255,255,255,0.35);font-weight:500;letter-spacing:0.04em;">ALPHINTRA AI</span>
-          </div>
-          Welcome to Alphintra! I'm your AI receptionist. How can I help you today?
+      <div id="chatbot-messages" class="flex-1 p-5 overflow-y-auto flex flex-col gap-4 scroll-smooth">
+        <div class="message-assistant rounded-2xl rounded-tl-sm px-5 py-3.5 text-[15px] bg-gradient-to-br from-white/10 to-white/5 border border-white/10 text-white/90 max-w-[85%] self-start shadow-lg leading-relaxed">
+          Welcome to Alphintra. How can I help you architect your next digital product?
         </div>
       </div>
 
-      <!-- Suggested prompts -->
-      <div id="suggested-prompts" style="padding:0 16px 10px;display:flex;gap:6px;flex-wrap:wrap;flex-shrink:0;">
-        <button onclick="useSuggestion('What services do you offer?')" style="font-size:12px;padding:6px 12px;border-radius:20px;background:rgba(124,58,237,0.12);border:1px solid rgba(124,58,237,0.25);color:rgba(255,255,255,0.65);cursor:pointer;transition:all 0.15s;" onmouseover="this.style.background='rgba(124,58,237,0.25)'" onmouseout="this.style.background='rgba(124,58,237,0.12)'">Our services</button>
-        <button onclick="useSuggestion('How can I contact Alphintra?')" style="font-size:12px;padding:6px 12px;border-radius:20px;background:rgba(124,58,237,0.12);border:1px solid rgba(124,58,237,0.25);color:rgba(255,255,255,0.65);cursor:pointer;transition:all 0.15s;" onmouseover="this.style.background='rgba(124,58,237,0.25)'" onmouseout="this.style.background='rgba(124,58,237,0.12)'">Contact us</button>
-        <button onclick="useSuggestion('Tell me about Alphintra')" style="font-size:12px;padding:6px 12px;border-radius:20px;background:rgba(124,58,237,0.12);border:1px solid rgba(124,58,237,0.25);color:rgba(255,255,255,0.65);cursor:pointer;transition:all 0.15s;" onmouseover="this.style.background='rgba(124,58,237,0.25)'" onmouseout="this.style.background='rgba(124,58,237,0.12)'">About us</button>
-      </div>
-
       <!-- Input Area -->
-      <div id="chatbot-input-area" style="padding:12px 14px;display:flex;align-items:center;gap:10px;flex-shrink:0;">
-        <input id="chatbot-input" maxlength="500" placeholder="Message Alphintra AI..." style="flex:1;border-radius:14px;padding:12px 16px;font-family:inherit;" />
-        <button id="chatbot-send" style="width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-        </button>
+      <div class="p-4 border-t border-white/10 bg-black/20">
+        <div class="relative flex items-center">
+          <input id="chatbot-input"
+            maxlength="500"
+            placeholder="Ask anything..."
+            class="w-full rounded-full bg-white/5 hover:bg-white/10 focus:bg-white/10 text-white placeholder-white/40 pl-5 pr-12 py-3.5 text-[15px] outline-none border border-white/10 focus:border-white/30 transition-all shadow-inner">
+
+          <button id="chatbot-send"
+            class="absolute right-1.5 w-10 h-10 rounded-full bg-white text-black flex items-center justify-center hover:scale-105 transition-transform shadow-md">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="translate-x-[-1px] translate-y-[1px]"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -203,54 +73,55 @@ const windowEl = document.getElementById("chatbot-window");
 const inputField = document.getElementById("chatbot-input");
 const sendBtn = document.getElementById("chatbot-send");
 const messageContainer = document.getElementById("chatbot-messages");
-const suggestedPrompts = document.getElementById("suggested-prompts");
-
-let isOpen = false;
 
 function openChatbot(initialMessage = null) {
-  isOpen = true;
-  windowEl.classList.remove("cb-closed");
-  windowEl.classList.add("cb-open");
-  trigger.style.opacity = "0";
-  trigger.style.pointerEvents = "none";
-
+  windowEl.classList.remove("hidden");
+  windowEl.classList.add("flex");
+  trigger.classList.add("hidden");
+  
+  // Trigger entry animation
+  setTimeout(() => {
+    windowEl.classList.remove("scale-95", "opacity-0");
+    windowEl.classList.add("scale-100", "opacity-100");
+  }, 10);
+  
   if (initialMessage && typeof initialMessage === 'string') {
     inputField.value = initialMessage;
     handleSend();
   } else {
-    setTimeout(() => inputField.focus(), 300);
+    inputField.focus();
   }
 }
 
 function closeChatbot() {
-  isOpen = false;
-  windowEl.classList.remove("cb-open");
-  windowEl.classList.add("cb-closed");
-  trigger.style.opacity = "1";
-  trigger.style.pointerEvents = "all";
+  // Trigger exit animation
+  windowEl.classList.remove("scale-100", "opacity-100");
+  windowEl.classList.add("scale-95", "opacity-0");
+  
+  setTimeout(() => {
+    windowEl.classList.add("hidden");
+    windowEl.classList.remove("flex");
+    trigger.classList.remove("hidden");
+  }, 300);
 }
 
 window.openChatbot = openChatbot;
 
-window.useSuggestion = function(text) {
-  inputField.value = text;
-  handleSend();
-};
-
 trigger.addEventListener("click", openChatbot);
 closeBtn.addEventListener("click", closeChatbot);
 
+// Close chatbot when clicking outside of it
 document.addEventListener("click", (e) => {
   if (e.target.closest('[onclick*="openChatbot"]')) return;
-  if (isOpen && !container.contains(e.target)) closeChatbot();
+
+  if (!windowEl.classList.contains("hidden") && !container.contains(e.target)) {
+    closeChatbot();
+  }
 });
 
 async function handleSend() {
   const text = inputField.value.trim();
   if (!text) return;
-
-  // Hide suggestion prompts after first message
-  if (suggestedPrompts) suggestedPrompts.style.display = 'none';
 
   appendMessage("user", text);
   inputField.value = "";
@@ -262,12 +133,16 @@ async function handleSend() {
     const response = await fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: text, session_id: sessionId, history: historyPayload })
+      body: JSON.stringify({
+        message: text,
+        session_id: sessionId,
+        history: historyPayload
+      })
     });
 
     typingIndicator.remove();
 
-    if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
+    if (!response.ok) throw new Error(\`HTTP error: \${response.status}\`);
 
     const data = await response.json();
     appendMessage("assistant", data.answer || "I could not find an answer.", data.sources);
@@ -275,46 +150,42 @@ async function handleSend() {
     conversationHistory.push({ role: "user", content: text });
     conversationHistory.push({ role: "assistant", content: data.answer || "" });
 
-    if (conversationHistory.length > 20) conversationHistory = conversationHistory.slice(-20);
-
+    if (conversationHistory.length > 20) {
+      conversationHistory = conversationHistory.slice(-20);
+    }
   } catch (error) {
     typingIndicator.remove();
-    appendMessage("assistant", "Sorry, I'm having trouble connecting right now. Please try again shortly.");
+    appendMessage("assistant", "Sorry, I am having trouble connecting right now. Please try again shortly.");
     console.error("Chatbot request failed:", error);
   }
 }
 
 sendBtn.addEventListener("click", handleSend);
-inputField.addEventListener("keydown", (e) => { if (e.key === "Enter") handleSend(); });
+
+inputField.addEventListener("keydown", function(event) {
+  if (event.key === "Enter") handleSend();
+});
 
 function appendMessage(role, content, sources = null) {
   const bubble = document.createElement("div");
-  bubble.className = `msg-bubble msg-slide-in ${role === "user" ? "msg-user" : "msg-bot"}`;
 
-  if (role === "assistant") {
-    bubble.innerHTML = `
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-        <div style="width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,#7c3aed,#4f46e5);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-        </div>
-        <span style="font-size:11px;color:rgba(255,255,255,0.35);font-weight:500;letter-spacing:0.04em;">ALPHINTRA AI</span>
-      </div>
-      <span class="msg-content"></span>
-    `;
-    bubble.querySelector('.msg-content').textContent = content;
-  } else {
-    bubble.textContent = content;
-  }
+  bubble.className = role === "user"
+    ? "rounded-2xl rounded-tr-sm px-5 py-3.5 text-[15px] max-w-[85%] self-end bg-white text-black shadow-lg leading-relaxed"
+    : "rounded-2xl rounded-tl-sm px-5 py-3.5 text-[15px] max-w-[85%] self-start bg-gradient-to-br from-white/10 to-white/5 border border-white/10 text-white/90 shadow-lg leading-relaxed";
+
+  bubble.textContent = content;
 
   if (sources && sources.length > 0) {
     const badges = document.createElement("div");
-    badges.style.cssText = "margin-top:10px;display:flex;flex-wrap:wrap;gap:5px;";
-    sources.forEach(src => {
+    badges.className = "mt-3 flex flex-wrap gap-1.5";
+
+    sources.forEach(function(src) {
       const badge = document.createElement("span");
-      badge.style.cssText = "font-size:10px;padding:3px 10px;border-radius:20px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);letter-spacing:0.04em;text-transform:uppercase;";
+      badge.className = "text-[10px] uppercase tracking-wider font-semibold rounded-full px-2.5 py-1 bg-white/10 text-white/70 border border-white/10";
       badge.textContent = src;
       badges.appendChild(badge);
     });
+
     bubble.appendChild(badges);
   }
 
@@ -324,8 +195,15 @@ function appendMessage(role, content, sources = null) {
 
 function appendTypingIndicator() {
   const indicator = document.createElement("div");
-  indicator.className = "msg-bubble msg-bot";
-  indicator.innerHTML = `<div style="display:flex;align-items:center;gap:5px;height:20px;"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>`;
+  indicator.className = "rounded-2xl rounded-tl-sm px-5 py-3.5 text-[15px] max-w-[85%] self-start bg-gradient-to-br from-white/10 to-white/5 border border-white/10 text-white/70 shadow-lg flex items-center gap-1.5";
+  
+  // Modern typing dots animation
+  indicator.innerHTML = \`
+    <span class="w-1.5 h-1.5 rounded-full bg-white/60 animate-bounce" style="animation-delay: 0ms"></span>
+    <span class="w-1.5 h-1.5 rounded-full bg-white/60 animate-bounce" style="animation-delay: 150ms"></span>
+    <span class="w-1.5 h-1.5 rounded-full bg-white/60 animate-bounce" style="animation-delay: 300ms"></span>
+  \`;
+
   messageContainer.appendChild(indicator);
   messageContainer.scrollTop = messageContainer.scrollHeight;
   return indicator;
