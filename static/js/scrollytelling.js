@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
 
     const numberTrack = document.getElementById('section-number-track');
+    const curtain = document.getElementById('page-curtain');
 
     function updateSlides(newIndex, isInitial = false) {
         if (!isInitial && newIndex === currentIndex) return;
@@ -18,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         if (!isInitial) isAnimating = true;
         
-        // Update sliding number track
+        // Update sliding number track immediately
         if (numberTrack) {
             numberTrack.style.transform = `translateY(-${newIndex * 25}%)`;
             
@@ -37,44 +38,55 @@ document.addEventListener("DOMContentLoaded", () => {
         const oldIndex = currentIndex;
         currentIndex = newIndex;
 
-        slides.forEach((slide, index) => {
-            if (!slide) return;
-            
-            if (index === newIndex) {
-                // Incoming Slide
-                slide.classList.remove('opacity-0', 'pointer-events-none', '-translate-y-24', 'translate-y-24');
-                // Ensure it transitions into place
-                requestAnimationFrame(() => {
+        if (isInitial || !curtain) {
+            // Initial setup or fallback: no curtain
+            slides.forEach((slide, index) => {
+                if (!slide) return;
+                slide.style.transitionDuration = '0ms'; // Disable CSS transitions for instant swap
+                if (index === newIndex) {
+                    slide.classList.remove('opacity-0', 'pointer-events-none', '-translate-y-24', 'translate-y-24');
                     slide.classList.add('opacity-100', 'translate-y-0');
-                    slide.classList.remove('pointer-events-none');
-                });
-            } else {
-                // Outgoing Slide
-                slide.classList.remove('opacity-100', 'translate-y-0');
-                slide.classList.add('opacity-0', 'pointer-events-none');
-                
-                // Determine direction based on scroll
-                if (index < newIndex) {
-                    // Scrolling Down: Past slides go up
-                    slide.classList.add('-translate-y-24');
-                } else if (index > newIndex) {
-                    // Scrolling Up: Future slides go down
-                    slide.classList.add('translate-y-24');
+                } else {
+                    slide.classList.remove('opacity-100', 'translate-y-0');
+                    slide.classList.add('opacity-0', 'pointer-events-none');
                 }
-            }
-        });
-
-        // Dispatch event for blob-bg.js to update 3D models
-        const event = new CustomEvent('sectionChanged', { 
-            detail: { index: newIndex } 
-        });
-        window.dispatchEvent(event);
-
-        // Unlock scrolling after transition finishes
-        if (!isInitial) {
+            });
+            const event = new CustomEvent('sectionChanged', { detail: { index: newIndex } });
+            window.dispatchEvent(event);
+        } else {
+            // Drop curtain down to cover screen
+            curtain.style.transform = 'translateY(0)';
+            
+            // Wait for curtain to drop, then swap content instantly
             setTimeout(() => {
-                isAnimating = false;
-            }, 1200); // 1.2s matches CSS transition duration
+                slides.forEach((slide, index) => {
+                    if (!slide) return;
+                    // Ensure slides swap instantly while covered
+                    slide.style.transitionDuration = '0ms'; 
+                    
+                    if (index === newIndex) {
+                        slide.classList.remove('opacity-0', 'pointer-events-none', '-translate-y-24', 'translate-y-24');
+                        slide.classList.add('opacity-100', 'translate-y-0');
+                    } else {
+                        slide.classList.remove('opacity-100', 'translate-y-0');
+                        slide.classList.add('opacity-0', 'pointer-events-none');
+                    }
+                });
+
+                // Update background 3D models while covered
+                const event = new CustomEvent('sectionChanged', { detail: { index: newIndex } });
+                window.dispatchEvent(event);
+
+                // Give DOM a tick, then pull curtain up
+                setTimeout(() => {
+                    curtain.style.transform = 'translateY(-100%)';
+                    
+                    // Release scrolling lock after curtain finishes rising
+                    setTimeout(() => {
+                        isAnimating = false;
+                    }, 700); // Wait for transition duration of curtain
+                }, 50);
+            }, 700); // Match curtain transition duration in HTML (700ms)
         }
     }
 
@@ -91,10 +103,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (isAnimating) return;
         
         if (e.deltaY > 40) {
-            // Scroll down
             window.goToSlide(currentIndex + 1);
         } else if (e.deltaY < -40) {
-            // Scroll up
             window.goToSlide(currentIndex - 1);
         }
     }, { passive: true });

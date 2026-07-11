@@ -668,6 +668,10 @@ video {
   z-index: 50;
 }
 
+.z-\[60\] {
+  z-index: 60;
+}
+
 .z-\[9999\] {
   z-index: 9999;
 }
@@ -785,8 +789,8 @@ video {
   max-width: 42rem;
 }
 
-.max-w-\[1150px\] {
-  max-width: 1150px;
+.max-w-\[1152px\] {
+  max-width: 1152px;
 }
 
 .max-w-\[85\%\] {
@@ -812,6 +816,11 @@ video {
 
 .-translate-y-24 {
   --tw-translate-y: -6rem;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.-translate-y-full {
+  --tw-translate-y: -100%;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
@@ -972,6 +981,11 @@ video {
 .bg-green-400 {
   --tw-bg-opacity: 1;
   background-color: rgb(74 222 128 / var(--tw-bg-opacity, 1));
+}
+
+.bg-pink-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(219 39 119 / var(--tw-bg-opacity, 1));
 }
 
 .bg-white {
@@ -1290,6 +1304,10 @@ video {
 
 .duration-\[1200ms\] {
   transition-duration: 1200ms;
+}
+
+.duration-\[700ms\] {
+  transition-duration: 700ms;
 }
 
 .ease-\[cubic-bezier\(0\.76\2c 0\2c 0\.24\2c 1\)\] {
