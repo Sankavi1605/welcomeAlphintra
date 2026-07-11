@@ -134,11 +134,12 @@ const chatbotRoot = document.getElementById("chatbot-root");
 chatbotRoot.innerHTML = `
   <div id="chatbot-container" style="position:fixed;bottom:24px;right:24px;z-index:9999;font-family:'Barlow', sans-serif;">
 
-    <!-- Trigger FAB -->
-    <button id="chatbot-trigger" style="width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;">
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Trigger FAB (More Prominent) -->
+    <button id="chatbot-trigger" style="height:60px;padding:0 24px;border-radius:30px;display:flex;align-items:center;justify-content:center;gap:12px;cursor:pointer;font-weight:600;font-size:16px;color:white;letter-spacing:0.5px;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
       </svg>
+      Chat with AI
     </button>
 
     <!-- Chat Window -->
