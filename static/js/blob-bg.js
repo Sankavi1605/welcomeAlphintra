@@ -168,44 +168,32 @@ const blobMaterial = new THREE.ShaderMaterial({
     transparent: true
 });
 
-const NUM_BLOBS = 5;
+const NUM_BLOBS = 2;
 const blobs = [];
 const blobTargets = [];
 
 // Base targets for each section scroll state
 // State 0: Hero, State 1: Services, State 2: Socials, State 3: CTA
 const layoutTargets = [
-    // Section 0 (Hero): Main blob left, others scattered behind
+    // Section 0 (Hero): Main blob left, other scattered behind
     [
         { x: -1.2, y: 0.2, z: 0, s: 1.2 }, // Main
-        { x: 3.0, y: 2.0, z: -4, s: 0.8 }, 
-        { x: 2.5, y: -2.0, z: -3, s: 0.5 },
-        { x: -3.5, y: -1.5, z: -6, s: 1.0 },
-        { x: -2.0, y: 3.0, z: -5, s: 0.6 }
+        { x: 3.0, y: 2.0, z: -4, s: 0.8 }
     ],
-    // Section 1 (Services): Main blob right, others converge
+    // Section 1 (Services): Main blob right, other converges
     [
         { x: 1.5, y: -0.3, z: 0, s: 1.4 }, // Main
-        { x: -2.0, y: 1.5, z: -2, s: 0.6 },
-        { x: -3.0, y: -1.0, z: -4, s: 0.9 },
-        { x: 4.0, y: 2.0, z: -5, s: 0.7 },
-        { x: 1.0, y: 3.5, z: -6, s: 0.8 }
+        { x: -3.0, y: -1.0, z: -4, s: 0.9 }
     ],
-    // Section 2 (Socials): Main blob centered large, others spread out
+    // Section 2 (Socials): Main blob centered large, other spreads out
     [
         { x: 0.0, y: 0.0, z: -1, s: 1.6 }, // Main
-        { x: -4.0, y: -3.0, z: -6, s: 1.2 },
-        { x: 4.0, y: 3.0, z: -4, s: 1.0 },
-        { x: 3.5, y: -2.5, z: -5, s: 0.8 },
-        { x: -3.5, y: 2.5, z: -3, s: 0.7 }
+        { x: -4.0, y: -3.0, z: -6, s: 1.2 }
     ],
-    // Section 3 (CTA): Main blob zoomed in background, others float around
+    // Section 3 (CTA): Main blob zoomed in background, other floats around
     [
         { x: 0.0, y: 0.5, z: -2, s: 2.5 }, // Main
-        { x: 2.0, y: -1.5, z: -1, s: 0.5 },
-        { x: -2.5, y: -2.0, z: -2, s: 0.6 },
-        { x: 3.0, y: 1.5, z: -3, s: 0.7 },
-        { x: -3.0, y: 1.0, z: -4, s: 0.8 }
+        { x: 3.0, y: 1.5, z: -3, s: 0.7 }
     ]
 ];
 
