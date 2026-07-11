@@ -175,25 +175,25 @@ const blobTargets = [];
 // Base targets for each section scroll state
 // State 0: Hero, State 1: Services, State 2: Socials, State 3: CTA
 const layoutTargets = [
-    // Section 0 (Hero): Main blob left, other scattered behind
+    // Section 0 (Hero): Main blob left, other right
     [
-        { x: -1.2, y: 0.2, z: 0, s: 1.2 }, // Main
-        { x: 3.0, y: 2.0, z: -4, s: 0.8 }
+        { x: -1.2, y: 0.2, z: 0, s: 1.2 }, 
+        { x: 3.0, y: 1.0, z: -4, s: 0.8 }
     ],
-    // Section 1 (Services): Main blob right, other converges
+    // Section 1 (Services): Shift left
     [
-        { x: 1.5, y: -0.3, z: 0, s: 1.4 }, // Main
-        { x: -3.0, y: -1.0, z: -4, s: 0.9 }
+        { x: 0.5, y: -0.3, z: -1, s: 1.4 }, 
+        { x: -3.0, y: 0.5, z: -3, s: 0.9 }
     ],
-    // Section 2 (Socials): Main blob centered large, other spreads out
+    // Section 2 (Socials): Shift further left
     [
-        { x: 0.0, y: 0.0, z: -1, s: 1.6 }, // Main
-        { x: -4.0, y: -3.0, z: -6, s: 1.2 }
+        { x: 2.5, y: 0.0, z: -1.5, s: 1.6 }, 
+        { x: -1.0, y: -1.5, z: -4, s: 1.2 }
     ],
-    // Section 3 (CTA): Main blob zoomed in background, other floats around
+    // Section 3 (CTA): Shift far left
     [
-        { x: 0.0, y: 0.5, z: -2, s: 2.5 }, // Main
-        { x: 3.0, y: 1.5, z: -3, s: 0.7 }
+        { x: 4.0, y: 0.5, z: -2, s: 2.0 }, 
+        { x: 1.0, y: 1.5, z: -3, s: 0.7 }
     ]
 ];
 
