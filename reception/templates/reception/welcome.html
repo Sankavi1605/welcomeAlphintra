@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-  <link href="{% static 'css/output.css' %}?v=9" rel="stylesheet">
+  <link href="{% static 'css/output.css' %}?v=10" rel="stylesheet">
 
   <style>
     body {
@@ -55,10 +55,12 @@
   <!-- Centralized Kiosk Window -->
   <div class="fixed inset-0 z-10 pointer-events-none flex items-center justify-center py-4 pl-4 pr-[100px] md:py-8 md:pl-8 md:pr-[180px] lg:py-12 lg:pl-12 lg:pr-[220px]">
     
-    <div id="kiosk-window" class="w-full max-w-[1153px] h-full max-h-[900px] liquid-glass rounded-[40px] border border-white/20 shadow-[0_0_80px_-20px_rgba(100,50,255,0.3)] pointer-events-auto flex flex-col relative transition-colors duration-1000">
+    <div id="kiosk-window" class="w-full max-w-[1152px] h-full max-h-[900px] liquid-glass rounded-[40px] border border-white/20 shadow-[0_0_80px_-20px_rgba(100,50,255,0.3)] pointer-events-auto flex flex-col relative transition-colors duration-1000">
       
-      <!-- Curtain Transition Layer -->
-      <div id="page-curtain" class="absolute inset-0 z-[60] bg-gradient-to-br from-black via-[#0a0a2a] to-[#3b0080] rounded-[40px] -translate-y-full transition-transform duration-[700ms] ease-[cubic-bezier(0.76,0,0.24,1)]"></div>
+      <!-- Curtain Transition Layer Wrapper (Clips the curtain to the window bounds) -->
+      <div class="absolute inset-0 z-[60] pointer-events-none rounded-[40px] overflow-hidden">
+        <div id="page-curtain" class="absolute inset-0 bg-gradient-to-br from-black via-[#0a0a2a] to-[#3b0080] -translate-y-full transition-transform duration-[700ms] ease-[cubic-bezier(0.76,0,0.24,1)]"></div>
+      </div>
       
       <!-- Fixed Right Side Section Number Indicator (Locked to Card Border) -->
       <div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-[65%] z-50 pointer-events-none overflow-hidden h-[100px] md:h-[160px] w-[150px] md:w-[260px]">
@@ -206,8 +208,8 @@
   </div>
 
   <!-- Scripts -->
-  <script src="{% static 'js/chatbot.js' %}?v=9"></script>
-  <script src="{% static 'js/scrollytelling.js' %}?v=9"></script>
-  <script type="module" src="{% static 'js/blob-bg.js' %}?v=9"></script>
+  <script src="{% static 'js/chatbot.js' %}?v=10"></script>
+  <script src="{% static 'js/scrollytelling.js' %}?v=10"></script>
+  <script type="module" src="{% static 'js/blob-bg.js' %}?v=10"></script>
 </body>
 </html>
