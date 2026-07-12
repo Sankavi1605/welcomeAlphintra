@@ -15,9 +15,12 @@ let conversationHistory = [];
 const styleEl = document.createElement('style');
 styleEl.textContent = `
   #chatbot-window {
-    background: #ffffff;
+    background: rgba(15, 10, 30, 0.6);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 32px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.05);
+    box-shadow: 0 30px 80px -10px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.05);
     transform-origin: bottom right;
     transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), opacity 0.25s ease;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -32,15 +35,19 @@ styleEl.textContent = `
     opacity: 0;
     pointer-events: none;
   }
+  
   #chatbot-trigger {
-    background: linear-gradient(135deg, #7c3aed, #4f46e5);
-    border: none;
-    box-shadow: 0 8px 24px rgba(108,43,217,0.4);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background: rgba(20, 10, 40, 0.5);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
   }
   #chatbot-trigger:hover {
     transform: scale(1.05);
-    box-shadow: 0 12px 32px rgba(108,43,217,0.6);
+    background: rgba(30, 15, 60, 0.6);
+    box-shadow: 0 15px 50px rgba(0,0,0,0.5);
   }
   
   /* Orb Animation */
@@ -79,22 +86,22 @@ styleEl.textContent = `
     background: transparent;
     display: flex; align-items: center; justify-content: center;
     cursor: pointer;
-    color: #8e8e93;
-    transition: background 0.2s;
+    color: rgba(255,255,255,0.5);
+    transition: background 0.2s, color 0.2s;
   }
-  .cb-icon-btn:hover { background: rgba(0,0,0,0.05); color: #1c1c1e; }
+  .cb-icon-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
   
   .cb-send-btn {
     width: 32px; height: 32px;
     border-radius: 50%;
     border: none;
-    background: #1c1c1e;
+    background: #ffffff;
     display: flex; align-items: center; justify-content: center;
     cursor: pointer;
-    color: white;
+    color: #000000;
     transition: transform 0.15s, background 0.2s;
   }
-  .cb-send-btn:hover { transform: scale(1.08); background: #000; }
+  .cb-send-btn:hover { transform: scale(1.08); background: #f0f0f0; }
   .cb-send-btn:active { transform: scale(0.95); }
 
   #chatbot-messages {
@@ -112,14 +119,15 @@ styleEl.textContent = `
     margin-bottom: 12px;
   }
   .msg-user {
-    background: #f2f2f7;
-    color: #1c1c1e;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.05);
+    color: #ffffff;
     align-self: flex-end;
     border-bottom-right-radius: 4px;
   }
   .msg-bot {
     background: transparent;
-    color: #1c1c1e;
+    color: #ffffff;
     align-self: flex-start;
     padding-left: 0;
   }
@@ -134,7 +142,7 @@ styleEl.textContent = `
 
   .typing-dot {
     width: 5px; height: 5px;
-    background: #8e8e93;
+    background: rgba(255,255,255,0.5);
     border-radius: 50%;
     display: inline-block;
     animation: typingBounce 1.4s infinite ease-in-out both;
@@ -152,7 +160,7 @@ const chatbotRoot = document.getElementById("chatbot-root");
 chatbotRoot.innerHTML = `
   <div id="chatbot-container" style="position:fixed;bottom:24px;right:24px;z-index:9999;">
 
-    <!-- Trigger FAB -->
+    <!-- Trigger FAB (Glassy) -->
     <button id="chatbot-trigger" style="height:60px;padding:0 24px;border-radius:30px;display:flex;align-items:center;justify-content:center;gap:12px;cursor:pointer;font-weight:600;font-size:16px;color:white;letter-spacing:0.5px;">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
@@ -160,12 +168,12 @@ chatbotRoot.innerHTML = `
       Chat with AI
     </button>
 
-    <!-- Chat Window -->
+    <!-- Chat Window (Glassy) -->
     <div id="chatbot-window" class="cb-closed" style="position:absolute;bottom:80px;right:0;width:380px;max-width:calc(100vw - 32px);height:560px;display:flex;flex-direction:column;overflow:hidden;">
 
       <!-- Header (Simple Close Button) -->
       <div style="position:absolute;top:16px;right:16px;z-index:10;">
-        <button id="chatbot-close" class="cb-icon-btn" style="background:#f2f2f7;width:30px;height:30px;">
+        <button id="chatbot-close" class="cb-icon-btn" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.05);width:30px;height:30px;color:white;">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
@@ -173,7 +181,7 @@ chatbotRoot.innerHTML = `
       <!-- Home View (Orb & Text) -->
       <div id="cb-home-view" style="display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;padding:40px 32px 0;">
         <div class="model-orb"></div>
-        <p style="text-align:center;color:#3a3a3c;font-size:15px;margin-top:40px;line-height:1.5;font-weight:400;">
+        <p style="text-align:center;color:rgba(255,255,255,0.8);font-size:15px;margin-top:40px;line-height:1.5;font-weight:400;">
           Alphintra AI's intelligent receptionist is ready to help you explore services and architect next-generation platforms.
         </p>
       </div>
@@ -187,26 +195,26 @@ chatbotRoot.innerHTML = `
 
       <!-- Input Area -->
       <div id="chatbot-input-area" style="padding:16px 20px 24px;">
-        <div style="display:flex;align-items:center;background:#ffffff;border:1px solid #e5e5ea;border-radius:24px;padding:6px 6px 6px 12px;box-shadow:0 4px 16px rgba(0,0,0,0.03);">
+        <div style="display:flex;align-items:center;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:24px;padding:6px 6px 6px 12px;box-shadow:inset 0 1px 4px rgba(0,0,0,0.2);">
           
           <button class="cb-icon-btn" style="width:28px;height:28px;">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           </button>
           
-          <div style="width:1px;height:16px;background:#e5e5ea;margin:0 8px;"></div>
+          <div style="width:1px;height:16px;background:rgba(255,255,255,0.15);margin:0 8px;"></div>
           
           <button class="cb-icon-btn" style="width:28px;height:28px;margin-right:6px;">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
           </button>
 
-          <input id="chatbot-input" maxlength="500" placeholder="Search..." style="flex:1;background:transparent;border:none;outline:none;font-size:15px;color:#1c1c1e;" />
+          <input id="chatbot-input" maxlength="500" placeholder="Search..." style="flex:1;background:transparent;border:none;outline:none;font-size:15px;color:#ffffff;" />
           
           <button class="cb-icon-btn" style="width:28px;height:28px;margin-right:4px;">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
           </button>
 
           <button id="chatbot-send" class="cb-send-btn">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
           </button>
 
         </div>
@@ -224,6 +232,11 @@ const sendBtn = document.getElementById("chatbot-send");
 const homeView = document.getElementById("cb-home-view");
 const chatView = document.getElementById("cb-chat-view");
 const messageContainer = document.getElementById("chatbot-messages");
+
+// Dynamic placeholder color
+const styleSheet = document.createElement("style");
+styleSheet.innerText = "#chatbot-input::placeholder { color: rgba(255,255,255,0.4); }";
+document.head.appendChild(styleSheet);
 
 let isOpen = false;
 let hasStartedChat = false;
@@ -326,7 +339,7 @@ function appendMessage(role, content, sources = null) {
     badges.style.cssText = "margin-top:10px;margin-left:36px;display:flex;flex-wrap:wrap;gap:6px;";
     sources.forEach(src => {
       const badge = document.createElement("span");
-      badge.style.cssText = "font-size:11px;padding:4px 10px;border-radius:12px;background:#f2f2f7;color:#8e8e93;font-weight:500;";
+      badge.style.cssText = "font-size:11px;padding:4px 10px;border-radius:12px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);font-weight:500;";
       badge.textContent = src;
       badges.appendChild(badge);
     });
