@@ -177,22 +177,22 @@ const blobTargets = [];
 const layoutTargets = [
     // Section 0 (Hero): Main blob left, other scattered behind
     [
-        { x: -1.2, y: 0.2, z: 0, s: 2.0 }, // Main
+        { x: -1.2, y: 0.2, z: 0, s: 1.5 }, // Main
         { x: 3.0, y: 2.0, z: -4, s: 1.4 }
     ],
     // Section 1 (Services): Main blob right, other converges
     [
-        { x: 1.5, y: -0.3, z: 0, s: 2.2 }, // Main
+        { x: 1.5, y: -0.3, z: 0, s: 1.6 }, // Main
         { x: -3.0, y: -1.0, z: -4, s: 1.5 }
     ],
     // Section 2 (Socials): Main blob centered large, other spreads out
     [
-        { x: 0.0, y: 0.0, z: -1, s: 2.6 }, // Main
+        { x: 0.0, y: 0.0, z: -1, s: 1.8 }, // Main
         { x: -4.0, y: -3.0, z: -6, s: 1.8 }
     ],
     // Section 3 (CTA): Main blob zoomed in background, other floats around
     [
-        { x: 0.0, y: 0.5, z: -2, s: 4.0 }, // Main
+        { x: 0.0, y: 0.5, z: -2, s: 2.6 }, // Main
         { x: 3.0, y: 1.5, z: -3, s: 1.2 }
     ]
 ];
