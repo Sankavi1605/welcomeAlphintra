@@ -168,7 +168,7 @@ const blobMaterial = new THREE.ShaderMaterial({
     transparent: true
 });
 
-const NUM_BLOBS = 2;
+const NUM_BLOBS = 1;
 const blobs = [];
 const blobTargets = [];
 
@@ -231,42 +231,8 @@ window.addEventListener('sectionChanged', (e) => {
 
 
 // --------------------------------------------------------
-// PARTICLE SYSTEM
+// PARTICLE SYSTEM (Removed to keep it clean)
 // --------------------------------------------------------
-const particleCount = 1500;
-const particleGeometry = new THREE.BufferGeometry();
-const particlePositions = new Float32Array(particleCount * 3);
-
-for (let i = 0; i < particleCount * 3; i++) {
-    // Spread widely across X, Y, Z
-    particlePositions[i] = (Math.random() - 0.5) * 25;
-}
-particleGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
-
-// Create a soft glowing dot texture for particles
-const pCanvas = document.createElement('canvas');
-pCanvas.width = 32;
-pCanvas.height = 32;
-const pCtx = pCanvas.getContext('2d');
-const gradient = pCtx.createRadialGradient(16, 16, 0, 16, 16, 16);
-gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
-gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
-pCtx.fillStyle = gradient;
-pCtx.fillRect(0, 0, 32, 32);
-const particleTexture = new THREE.CanvasTexture(pCanvas);
-
-const particleMaterial = new THREE.PointsMaterial({
-    size: 0.08,
-    map: particleTexture,
-    transparent: true,
-    opacity: 0.5,
-    color: 0x66aaff, // subtle cyan/blue
-    blending: THREE.AdditiveBlending,
-    depthWrite: false
-});
-
-const particles = new THREE.Points(particleGeometry, particleMaterial);
-scene.add(particles);
 
 
 // --------------------------------------------------------
@@ -315,9 +281,7 @@ function animate() {
         mesh.rotation.y += blobObj.rotSpeedY;
     });
 
-    // Slowly drift particles
-    particles.rotation.y = time * 0.02;
-    particles.rotation.x = time * 0.01;
+    // Particles removed
 
     renderer.render(scene, camera);
 }

@@ -986,8 +986,8 @@ video {
   line-height: 1;
 }
 
-.text-7xl {
-  font-size: 4.5rem;
+.text-6xl {
+  font-size: 3.75rem;
   line-height: 1;
 }
 
@@ -1349,8 +1349,8 @@ video {
     line-height: 1;
   }
 
-  .md\:text-\[9rem\] {
-    font-size: 9rem;
+  .md\:text-\[7rem\] {
+    font-size: 7rem;
   }
 
   .md\:text-lg {
