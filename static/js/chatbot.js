@@ -15,12 +15,12 @@ let conversationHistory = [];
 const styleEl = document.createElement('style');
 styleEl.textContent = `
   #chatbot-window {
-    background: rgba(15, 10, 30, 0.6);
+    background: rgba(10, 10, 10, 0.45);
     backdrop-filter: blur(40px);
     -webkit-backdrop-filter: blur(40px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 32px;
-    box-shadow: 0 30px 80px -10px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.05);
+    box-shadow: 0 30px 80px -10px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05);
     transform-origin: bottom right;
     transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), opacity 0.25s ease;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -37,17 +37,17 @@ styleEl.textContent = `
   }
   
   #chatbot-trigger {
-    background: rgba(20, 10, 40, 0.5);
+    background: rgba(10, 10, 10, 0.4);
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
     border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
     transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
   }
   #chatbot-trigger:hover {
     transform: scale(1.05);
-    background: rgba(30, 15, 60, 0.6);
-    box-shadow: 0 15px 50px rgba(0,0,0,0.5);
+    background: rgba(20, 20, 20, 0.5);
+    box-shadow: 0 15px 50px rgba(0,0,0,0.4);
   }
   
   /* Orb Animation */
@@ -171,15 +171,15 @@ chatbotRoot.innerHTML = `
     <!-- Chat Window (Glassy) -->
     <div id="chatbot-window" class="cb-closed" style="position:absolute;bottom:80px;right:0;width:380px;max-width:calc(100vw - 32px);height:560px;display:flex;flex-direction:column;overflow:hidden;">
 
-      <!-- Header (Simple Close Button) -->
-      <div style="position:absolute;top:16px;right:16px;z-index:10;">
+      <!-- Header (Close Button) -->
+      <div style="display:flex;justify-content:flex-end;padding:16px 16px 0;flex-shrink:0;">
         <button id="chatbot-close" class="cb-icon-btn" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.05);width:30px;height:30px;color:white;">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
 
       <!-- Home View (Orb & Text) -->
-      <div id="cb-home-view" style="display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;padding:40px 32px 0;">
+      <div id="cb-home-view" style="display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;padding:20px 32px 0;">
         <div class="model-orb"></div>
         <p style="text-align:center;color:rgba(255,255,255,0.8);font-size:15px;margin-top:40px;line-height:1.5;font-weight:400;">
           Alphintra AI's intelligent receptionist is ready to help you explore services and architect next-generation platforms.
@@ -187,8 +187,9 @@ chatbotRoot.innerHTML = `
       </div>
 
       <!-- Chat View (Hidden initially) -->
-      <div id="cb-chat-view" style="display:none;flex-direction:column;flex:1;overflow:hidden;padding-top:40px;">
-        <div id="chatbot-messages" style="flex:1;overflow-y:auto;padding:0 20px;display:flex;flex-direction:column;">
+      <div id="cb-chat-view" style="display:none;flex-direction:column;flex:1;overflow:hidden;padding-top:10px;">
+        <div id="chatbot-messages" style="flex:1;overflow-y:auto;padding:0 20px;display:flex;flex-direction:column;mask-image:linear-gradient(to bottom, transparent 0%, black 5%, black 100%);-webkit-mask-image:linear-gradient(to bottom, transparent 0%, black 5%, black 100%);">
+          <div style="height:20px;flex-shrink:0;"></div> <!-- Spacing at top -->
           <!-- Messages go here -->
         </div>
       </div>
