@@ -192,7 +192,7 @@ const layoutTargets = [
     ],
     // Section 3 (CTA): Main blob zoomed in background, other floats around
     [
-        { x: 0.0, y: 0.5, z: -2, s: 2.6 }, // Main
+        { x: 0.0, y: 0.5, z: -2, s: 3.4 }, // Main
         { x: 3.0, y: 1.5, z: -3, s: 1.2 }
     ]
 ];
