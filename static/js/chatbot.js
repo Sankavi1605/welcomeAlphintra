@@ -33,12 +33,12 @@ let conversationHistory = [];
 const styleEl = document.createElement('style');
 styleEl.textContent = `
   #chatbot-window {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(40px);
-    -webkit-backdrop-filter: blur(40px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.2);
     border-radius: 32px;
-    box-shadow: 0 30px 80px -10px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+    box-shadow: 0 0 80px -20px rgba(100,50,255,0.3);
     transform-origin: bottom right;
     transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), opacity 0.25s ease;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -55,17 +55,17 @@ styleEl.textContent = `
   }
   
   #chatbot-trigger {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 0 80px -20px rgba(100,50,255,0.3);
+    transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease, background 0.2s ease;
   }
   #chatbot-trigger:hover {
     transform: scale(1.05);
-    background: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+    background: rgba(255,255,255,0.08);
+    box-shadow: 0 0 100px -10px rgba(100,50,255,0.4);
   }
   
   /* Orb Animation */
