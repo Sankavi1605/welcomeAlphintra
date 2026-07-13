@@ -281,6 +281,12 @@ trigger.addEventListener("click", openChatbot);
 closeBtn.addEventListener("click", closeChatbot);
 
 document.addEventListener("click", (e) => {
+  // Play click sound for any button or link
+  const clickable = e.target.closest('button, a, .quick-btn, .nav-pill');
+  if (clickable && window.uiSounds) {
+    window.uiSounds.playClick();
+  }
+
   const container = document.getElementById("chatbot-container");
   if (e.target.closest('[onclick*="openChatbot"]')) return;
   if (isOpen && !container.contains(e.target)) closeChatbot();
@@ -329,7 +335,12 @@ async function handleSend() {
 }
 
 sendBtn.addEventListener("click", handleSend);
-inputField.addEventListener("keydown", (e) => { if (e.key === "Enter") handleSend(); });
+inputField.addEventListener("keydown", (e) => { 
+  if (e.key === "Enter") {
+    if (window.uiSounds) window.uiSounds.playClick();
+    handleSend(); 
+  }
+});
 
 function appendMessage(role, content, sources = null) {
   const bubble = document.createElement("div");
