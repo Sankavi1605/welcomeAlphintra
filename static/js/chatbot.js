@@ -1,4 +1,4 @@
-const API_URL = "https://chatbot-backend-452555374554.us-central1.run.app/api/v1/chat";
+const API_URL = "/api/chat/";
 
 // Clear any previously stored session that might be invalid
 (function() {
@@ -317,13 +317,23 @@ async function handleSend() {
 
     typingIndicator.remove();
 
-    if (!response.ok) throw new Error("HTTP error " + response.status);
-
     const data = await response.json();
-    appendMessage("assistant", data.answer || "I could not find an answer.", data.sources);
+    console.log("Backend response:", response.status, data);
+
+    if (!response.ok) {
+      // Show the actual backend error so we can debug
+      const errMsg = data.error || data.detail || "Unexpected error from server.";
+      appendMessage("assistant", "⚠️ " + errMsg);
+      return;
+    }
+
+    // Handle both {answer: ...} and {detail: ...} shapes
+    const answer = data.answer || data.response || data.detail || "I could not find an answer.";
+    const sources = data.sources || data.source_documents || null;
+    appendMessage("assistant", answer, sources);
 
     conversationHistory.push({ role: "user", content: text });
-    conversationHistory.push({ role: "assistant", content: data.answer || "" });
+    conversationHistory.push({ role: "assistant", content: answer });
 
     if (conversationHistory.length > 20) conversationHistory = conversationHistory.slice(-20);
 
