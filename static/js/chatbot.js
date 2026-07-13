@@ -337,7 +337,12 @@ async function handleSend() {
 sendBtn.addEventListener("click", handleSend);
 inputField.addEventListener("keydown", (e) => { 
   if (e.key === "Enter") {
-    if (window.uiAudio) window.uiAudio.playClick();
+    e.preventDefault();
+    try {
+      if (window.uiAudio) window.uiAudio.playClick();
+    } catch (err) {
+      console.error("Audio error:", err);
+    }
     handleSend(); 
   }
 });
