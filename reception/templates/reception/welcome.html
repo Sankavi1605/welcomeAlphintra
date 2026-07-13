@@ -1,11 +1,11 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <title>Alphintra | Digital Engineering</title>
-  
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -13,55 +13,276 @@
   <link href="{% static 'css/output.css' %}?v=20" rel="stylesheet">
 
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
       font-family: 'Barlow', sans-serif;
       background-color: #000;
+      color: #fff;
+      overflow: hidden;
+      height: 100dvh;
+      width: 100vw;
     }
-    .font-heading {
-      font-family: 'Instrument Serif', serif;
-    }
+
+    .font-heading { font-family: 'Instrument Serif', serif; }
+
     .liquid-glass {
-      background: rgba(255, 255, 255, 0.03);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     }
     .liquid-glass-strong {
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(30px);
-      -webkit-backdrop-filter: blur(30px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     }
-    /* ── Curtain Transition ── */
-    #curtain-clip {
-      position: absolute;
-      inset: 0;
-      border-radius: 40px;
+
+    /* ── Curtain (Removed) ── */
+
+    /* ── Outer wrapper ── */
+    #kiosk-outer {
+      position: fixed; inset: 0; z-index: 10;
+      display: flex; align-items: center; justify-content: center;
+      padding: 12px;
+    }
+
+    /* ── Kiosk card ── */
+    #kiosk-window {
+      width: 100%; height: 100%;
+      max-width: 1300px; max-height: 900px;
+      display: flex; flex-direction: column;
+      position: relative;
+      border-radius: clamp(16px, 4vw, 40px);
+      border: 1px solid rgba(255,255,255,0.2);
+      box-shadow: 0 0 80px -20px rgba(100,50,255,0.3);
+      background: rgba(255,255,255,0.03);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       overflow: hidden;
-      pointer-events: none;
-      z-index: 60;
     }
-    #page-curtain {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, #000000 0%, #0a0a2a 50%, #3b0080 100%);
-      transform: translateY(-100%);
-      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-      pointer-events: none;
+
+    /* ── Section number (desktop only) ── */
+    #section-num-wrapper {
+      display: none;
+      position: absolute; right: 0; top: 50%;
+      transform: translateY(-50%) translateX(65%);
+      z-index: 50; overflow: hidden;
+      height: 160px; width: 260px; pointer-events: none;
     }
-    #page-curtain.active {
-      transform: translateY(0);
+    #section-number-track {
+      display: flex; flex-direction: column;
+      transition: transform 1.2s cubic-bezier(0.76,0,0.24,1);
+      text-align: right;
     }
-    #page-curtain.exit {
-      transform: translateY(100%);
+    #section-number-track > div {
+      height: 160px; display: flex; align-items: center;
+      justify-content: flex-end;
+      font-family: 'Instrument Serif', serif; font-style: italic;
+      font-size: 7rem; color: rgba(255,255,255,0.3);
+      text-shadow: 0 4px 20px rgba(0,0,0,0.5); padding-right: 40px;
+    }
+
+    /* ── Navbar ── */
+    #main-nav {
+      width: 100%; display: flex; align-items: center;
+      justify-content: space-between; z-index: 50; flex-shrink: 0;
+      padding: 12px 16px;
+    }
+    #main-nav a { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo-icon  { height: 44px; width: auto; object-fit: contain; }
+    .nav-logo-text  { height: 28px; width: auto; object-fit: contain; }
+    .nav-mobile { display: flex; align-items: center; gap: 8px; }
+    .nav-desktop { display: none; }
+    .nav-pill {
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 999px; padding: 6px 14px; color: #fff; font-size: 12px;
+      font-family: 'Barlow', sans-serif; cursor: pointer;
+    }
+    .nav-pill-outline {
+      background: transparent; border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 999px; padding: 6px 14px; color: #fff; font-size: 12px;
+      font-family: 'Barlow', sans-serif; cursor: pointer;
+    }
+
+    /* ── Slides container ── */
+    #slides-area {
+      flex: 1; position: relative; width: 100%; overflow: hidden; min-height: 0;
+    }
+
+    /* ── Each slide ── */
+    .kiosk-slide {
+      position: absolute; inset: 0;
+      padding: 16px;
+      overflow-y: auto; overflow-x: hidden;
+      display: flex; flex-direction: column;
+      opacity: 1;
+      transform: scale(1) translateY(0);
+      transition: opacity 0.6s cubic-bezier(0.16,1,0.3,1),
+                  transform 0.6s cubic-bezier(0.16,1,0.3,1);
+      z-index: 10;
+      will-change: transform, opacity;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+    }
+    .kiosk-slide.hidden-prev {
+      opacity: 0; transform: scale(1.1) translateY(-20px); pointer-events: none; z-index: 5;
+    }
+    .kiosk-slide.hidden-next {
+      opacity: 0; transform: scale(0.9) translateY(20px); pointer-events: none; z-index: 5;
+    }
+    .kiosk-slide.active-slide {
+      opacity: 1; transform: scale(1) translateY(0); pointer-events: all; z-index: 10;
+    }
+
+    /* ── Section 0: Hero ── */
+    .hero-grid {
+      display: flex; flex-direction: column;
+      gap: 16px; flex: 1;
+    }
+    .hero-left { display: flex; flex-direction: column; gap: 0; }
+    .hero-badge {
+      display: inline-flex; align-items: center; align-self: flex-start;
+      padding: 4px 14px; border-radius: 999px; font-size: 11px;
+      color: rgba(255,255,255,0.8); margin-bottom: 10px;
+    }
+    .hero-title {
+      font-family: 'Instrument Serif', serif; font-style: italic;
+      font-size: clamp(2rem, 8vw, 5rem); line-height: 1; color: #fff;
+      margin-bottom: 10px;
+    }
+    .hero-sub {
+      font-size: clamp(12px, 3vw, 16px); color: rgba(255,255,255,0.8);
+      line-height: 1.6; max-width: 480px; margin-bottom: 14px;
+    }
+    .hero-btns { display: flex; flex-wrap: wrap; gap: 10px; }
+    .btn-primary {
+      padding: 10px 20px; border-radius: 999px; font-size: 13px;
+      font-family: 'Barlow', sans-serif; color: #fff; cursor: pointer;
+      border: none; font-weight: 500;
+    }
+    .btn-secondary {
+      padding: 10px 20px; border-radius: 999px; font-size: 13px;
+      font-family: 'Barlow', sans-serif; color: #fff; cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.2); background: transparent; font-weight: 500;
+    }
+    .receptionist-card {
+      border-radius: clamp(24px, 4vw, 40px); padding: clamp(20px, 4vw, 40px);
+    }
+    .ai-avatar {
+      width: 48px; height: 48px; border-radius: 50%; background: #fff;
+      color: #000; display: flex; align-items: center; justify-content: center;
+      font-family: 'Instrument Serif', serif; font-style: italic;
+      font-size: 16px; font-weight: 700; flex-shrink: 0;
+    }
+    .rec-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .rec-name { font-size: 16px; font-weight: 600; }
+    .rec-desc { font-size: 13px; color: rgba(255,255,255,0.8); line-height: 1.6; margin-bottom: 16px; }
+    .quick-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .quick-btn {
+      padding: 12px 16px; border-radius: 999px; font-size: 12px;
+      font-family: 'Barlow', sans-serif; color: #fff; cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05);
+      text-align: left; transition: background 0.2s;
+    }
+    .quick-btn:hover { background: rgba(255,255,255,0.1); }
+
+    /* ── Section 1: Services ── */
+    .services-title {
+      font-family: 'Instrument Serif', serif; font-style: italic;
+      font-size: clamp(1.5rem, 6vw, 4.5rem); margin-bottom: 12px;
+    }
+    .services-grid {
+      display: grid; grid-template-columns: 1fr;
+      gap: 12px; flex: 1;
+    }
+    .service-card {
+      border-radius: clamp(20px, 3vw, 40px);
+      padding: clamp(20px, 3vw, 40px);
+      display: flex; flex-direction: column;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05);
+    }
+    .service-card h3 {
+      font-family: 'Instrument Serif', serif; font-style: italic;
+      font-size: clamp(20px, 3vw, 36px); margin-bottom: 12px; font-weight: 600;
+    }
+    .service-card p {
+      font-size: clamp(13px, 2vw, 18px); color: rgba(255,255,255,0.7); line-height: 1.6;
+    }
+
+    /* ── Section 2: Socials ── */
+    .socials-title {
+      font-family: 'Instrument Serif', serif; font-style: italic;
+      font-size: clamp(1.5rem, 6vw, 4rem); margin-bottom: 8px;
+    }
+    .socials-sub { font-size: clamp(13px, 2.5vw, 18px); color: rgba(255,255,255,0.65); margin-bottom: 20px; }
+    .socials-links { display: flex; flex-wrap: wrap; gap: 8px; }
+    .social-link {
+      padding: 8px 18px; border-radius: 999px; font-size: 13px;
+      font-family: 'Barlow', sans-serif; color: #fff; text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.03);
+    }
+
+    /* ── Section 3: CTA ── */
+    .cta-wrap { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px; }
+    .cta-title {
+      font-family: 'Instrument Serif', serif; font-style: italic;
+      font-size: clamp(2rem, 10vw, 6rem); line-height: 1;
+    }
+    .cta-sub {
+      font-size: clamp(13px, 3vw, 20px); color: rgba(255,255,255,0.85);
+      max-width: 540px; line-height: 1.6;
+    }
+    .cta-btns { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+    .btn-cta-primary {
+      padding: 12px 28px; border-radius: 999px; font-size: 14px;
+      font-family: 'Barlow', sans-serif; color: #fff; cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.3); font-weight: 600;
+    }
+    .btn-cta-secondary {
+      padding: 12px 28px; border-radius: 999px; font-size: 14px;
+      font-family: 'Barlow', sans-serif; color: #fff; cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.2); background: transparent;
+      font-weight: 600; text-decoration: none;
+    }
+
+    /* ── Desktop upgrades (≥768px) ── */
+    @media (min-width: 768px) {
+      #kiosk-outer { padding: 32px 200px 32px 32px; }
+      #main-nav { padding: 24px 40px; }
+      #main-nav a { gap: 14px; }
+      .nav-logo-icon { height: 54px; }
+      .nav-logo-text  { height: 32px; }
+      .nav-mobile { display: none !important; }
+      .nav-desktop { display: flex !important; align-items: center; gap: 24px; font-size: 14px; color: rgba(255,255,255,0.8); }
+      .nav-desktop button { background: none; border: none; color: inherit; cursor: pointer; font-family: 'Barlow', sans-serif; }
+      .nav-desktop .nav-pill { font-size: 14px; padding: 8px 20px; border: 1px solid rgba(255,255,255,0.2); border-radius: 999px; }
+      .kiosk-slide { padding: 40px 60px; }
+      .hero-grid { flex-direction: row; align-items: center; justify-content: space-between; }
+      .hero-left { max-width: 55%; }
+      .receptionist-card { width: 42%; max-width: 480px; flex-shrink: 0; margin-left: auto; }
+      .hero-title { font-size: clamp(4rem, 7vw, 8rem); margin-bottom: 24px; }
+      .hero-badge { font-size: 14px; margin-bottom: 24px; padding: 6px 18px; }
+      .hero-sub { font-size: 20px; margin-bottom: 40px; line-height: 1.6; }
+      .btn-primary, .btn-secondary { padding: 16px 36px; font-size: 16px; }
+      .ai-avatar { width: 64px; height: 64px; font-size: 20px; }
+      .rec-name { font-size: 24px; }
+      .rec-desc { font-size: 18px; margin-bottom: 32px; }
+      .quick-btn { font-size: 14px; padding: 16px 20px; }
+      .services-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .service-card { border-radius: 40px; padding: 40px; }
+      .service-card h3 { font-size: 42px; margin-bottom: 16px; }
+      .service-card p { font-size: 18px; line-height: 1.6; }
+      .social-link { padding: 14px 32px; font-size: 16px; }
+      .btn-cta-primary, .btn-cta-secondary { padding: 16px 48px; font-size: 18px; }
     }
   </style>
-  
+
   <!-- Three.js import map -->
   <script type="importmap">
     {
@@ -73,172 +294,136 @@
   </script>
 </head>
 
-<body class="bg-black text-white selection:bg-purple-500/30 font-sans overflow-hidden antialiased">
-
+<body>
   <!-- Chatbot root -->
   <div id="chatbot-root"></div>
 
-  <!-- Centralized Kiosk Window -->
-  <div class="fixed inset-0 z-10 pointer-events-none flex items-center justify-center py-4 pl-4 pr-[100px] md:py-8 md:pl-8 md:pr-[180px] lg:py-12 lg:pl-12 lg:pr-[220px]">
-    
-    <div id="kiosk-window" class="w-full max-w-[1300px] h-full max-h-[900px] liquid-glass rounded-[40px] border border-white/20 shadow-[0_0_80px_-20px_rgba(100,50,255,0.3)] pointer-events-auto flex flex-col relative transition-colors duration-1000">
+  <!-- Outer wrapper -->
+  <div id="kiosk-outer">
 
-      <!-- Curtain: clipped to kiosk card only -->
-      <div id="curtain-clip">
-        <div id="page-curtain"></div>
-      </div>
-      
-      <!-- Fixed Right Side Section Number Indicator (Locked to Card Border) -->
-      <div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-[65%] z-50 pointer-events-none overflow-hidden h-[100px] md:h-[160px] w-[150px] md:w-[260px]">
-        <div id="section-number-track" class="flex flex-col transition-transform duration-[1200ms] ease-[cubic-bezier(0.76,0,0.24,1)] text-right">
-          <div class="h-[100px] md:h-[160px] flex items-center justify-end font-heading italic text-6xl md:text-[7rem] text-white/30 drop-shadow-2xl pr-4 md:pr-10">01</div>
-          <div class="h-[100px] md:h-[160px] flex items-center justify-end font-heading italic text-6xl md:text-[7rem] text-white/30 drop-shadow-2xl pr-4 md:pr-10">02</div>
-          <div class="h-[100px] md:h-[160px] flex items-center justify-end font-heading italic text-6xl md:text-[7rem] text-white/30 drop-shadow-2xl pr-4 md:pr-10">03</div>
-          <div class="h-[100px] md:h-[160px] flex items-center justify-end font-heading italic text-6xl md:text-[7rem] text-white/30 drop-shadow-2xl pr-4 md:pr-10">04</div>
+    <div id="kiosk-window">
+
+      <!-- Section number indicator (desktop) -->
+      <div id="section-num-wrapper">
+        <div id="section-number-track">
+          <div>01</div>
+          <div>02</div>
+          <div>03</div>
+          <div>04</div>
         </div>
       </div>
-      
-      <!-- Navbar (Inside Window) -->
-      <nav class="w-full px-6 py-6 md:px-10 md:py-8 flex items-center justify-between z-50">
-        <a href="/" class="flex items-center gap-2">
-          <img src="https://pub-04643188b78b434d8c44735a34b1fe23.r2.dev/AlphintraRealLogo-removebg-preview%20(1).png" alt="Alphintra Logo" class="h-8 md:h-10 w-auto object-contain">
-          <img src="https://pub-04643188b78b434d8c44735a34b1fe23.r2.dev/alphintrabg-removebg-preview.png" alt="Alphintra" class="h-5 md:h-6 w-auto object-contain">
+
+      <!-- Navbar -->
+      <nav id="main-nav">
+        <a href="/">
+          <img src="https://pub-04643188b78b434d8c44735a34b1fe23.r2.dev/AlphintraRealLogo-removebg-preview%20(1).png" alt="Alphintra Logo" class="nav-logo-icon">
+          <img src="https://pub-04643188b78b434d8c44735a34b1fe23.r2.dev/alphintrabg-removebg-preview.png" alt="Alphintra" class="nav-logo-text">
         </a>
-        <div class="hidden md:flex items-center gap-6 text-sm text-white/80 font-medium">
-          <button onclick="window.goToSlide(1)" class="hover:text-white transition-colors">Services</button>
-          <button onclick="window.goToSlide(2)" class="hover:text-white transition-colors">Socials</button>
-          <button onclick="openChatbot()" class="border border-white/30 rounded-full px-5 py-2 text-white hover:bg-white/10 transition-colors">
-            Chat Now
-          </button>
+        <!-- Mobile nav -->
+        <div class="nav-mobile">
+          <button class="nav-pill-outline" onclick="window.goToSlide(1)">Services</button>
+          <button class="nav-pill" onclick="openChatbot()">Chat</button>
+        </div>
+        <!-- Desktop nav -->
+        <div class="nav-desktop">
+          <button onclick="window.goToSlide(1)">Services</button>
+          <button onclick="window.goToSlide(2)">Socials</button>
+          <button class="nav-pill" onclick="openChatbot()">Chat Now</button>
         </div>
       </nav>
 
-      </nav>
+      <!-- Slides area -->
+      <div id="slides-area">
 
-      <!-- Content Area -->
-      <div class="flex-1 relative w-full h-full overflow-hidden">
-        
-        <!-- Hero Content (Section 0) -->
-        <div id="content-0" class="kiosk-slide absolute inset-0 w-full h-full p-6 md:p-10 flex flex-col justify-center transition-all duration-[1200ms] ease-[cubic-bezier(0.76,0,0.24,1)]">
-          <div class="grid lg:grid-cols-2 gap-8 items-center h-full">
-            <div>
-              <div class="liquid-glass rounded-full inline-flex px-5 py-2 text-sm text-white/80 mb-8 mt-4">
-                AI Receptionist Online
-              </div>
-              <h1 class="font-heading italic text-5xl md:text-8xl leading-none">
-                Welcome to <br>
-                Alphintra
-              </h1>
-              <p class="mt-4 md:mt-8 max-w-xl text-base md:text-xl text-white/80 leading-relaxed">
-                Your intelligent digital receptionist for AI, Web, Mobile, Cloud,
-                Backend, UI/UX, and 3D Engineering.
-              </p>
-              <div class="mt-6 md:mt-10 flex flex-wrap gap-4">
-                <button onclick="openChatbot()" class="liquid-glass-strong rounded-full px-8 py-4 text-white font-medium hover:bg-white/10 transition-colors">
-                  Start a Conversation
-                </button>
-                <button onclick="window.goToSlide(1)" class="liquid-glass rounded-full px-8 py-4 text-white font-medium hover:bg-white/5 transition-colors border border-white/20">
-                  Explore Services
-                </button>
+        <!-- Section 0: Hero -->
+        <div id="content-0" class="kiosk-slide">
+          <div class="hero-grid">
+            <div class="hero-left">
+              <div class="hero-badge liquid-glass">AI Receptionist Online</div>
+              <h1 class="hero-title">Welcome to<br>Alphintra</h1>
+              <p class="hero-sub">Your intelligent digital receptionist for AI, Web, Mobile, Cloud, Backend, UI/UX, and 3D Engineering.</p>
+              <div class="hero-btns">
+                <button class="btn-primary liquid-glass-strong" onclick="openChatbot()">Start a Conversation</button>
+                <button class="btn-secondary" onclick="window.goToSlide(1)">Explore Services</button>
               </div>
             </div>
-
-            <!-- Receptionist Card -->
-            <div class="liquid-glass rounded-[40px] p-6 md:p-10 mt-4 lg:mt-0 shadow-2xl">
-              <div class="flex items-center gap-4 mb-8">
-                <div class="w-16 h-16 rounded-full bg-white text-black flex items-center justify-center text-2xl font-bold font-heading italic">
-                  AI
-                </div>
-                <div>
-                  <h2 class="text-xl md:text-2xl font-semibold">Alphintra Assistant</h2>
-                </div>
+            <div class="receptionist-card liquid-glass">
+              <div class="rec-header">
+                <div class="ai-avatar">AI</div>
+                <div class="rec-name">Alphintra Assistant</div>
               </div>
-              <p class="text-white/80 text-sm md:text-lg leading-relaxed">
-                Hi, welcome to Alphintra. I can help you explore our services,
-                start a project discussion, or answer questions about our company.
-              </p>
-              <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <button onclick="openChatbot('Tell me about AI systems')" class="liquid-glass rounded-full px-4 py-3 text-sm hover:bg-white/10 transition-colors text-left border border-white/10">Ask about AI</button>
-                <button onclick="openChatbot('Tell me about Web Development')" class="liquid-glass rounded-full px-4 py-3 text-sm hover:bg-white/10 transition-colors text-left border border-white/10">Web Development</button>
-                <button onclick="openChatbot('Tell me about Cloud Systems')" class="liquid-glass rounded-full px-4 py-3 text-sm hover:bg-white/10 transition-colors text-left border border-white/10">Cloud Systems</button>
-                <button onclick="openChatbot('I want to start a project')" class="liquid-glass rounded-full px-4 py-3 text-sm hover:bg-white/10 transition-colors text-left border border-white/10">Start Project</button>
+              <p class="rec-desc">Hi, welcome to Alphintra. I can help you explore our services, start a project discussion, or answer questions about our company.</p>
+              <div class="quick-btns">
+                <button class="quick-btn" onclick="openChatbot('Tell me about AI systems')">Ask about AI</button>
+                <button class="quick-btn" onclick="openChatbot('Tell me about Web Development')">Web Dev</button>
+                <button class="quick-btn" onclick="openChatbot('Tell me about Cloud Systems')">Cloud Systems</button>
+                <button class="quick-btn" onclick="openChatbot('I want to start a project')">Start Project</button>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Services Content (Section 1) -->
-        <div id="content-1" class="kiosk-slide absolute inset-0 w-full h-full p-6 md:p-10 flex flex-col justify-center transition-all duration-[1200ms] ease-[cubic-bezier(0.76,0,0.24,1)] opacity-0 translate-y-24 pointer-events-none">
-          <div class="w-full h-full flex flex-col justify-center">
-            <h2 class="font-heading italic text-4xl md:text-7xl mb-8 md:mb-12 text-center lg:text-left">
-              What We Build
-            </h2>
-            <div class="grid md:grid-cols-2 gap-4 md:gap-8 lg:gap-12">
-              <div class="liquid-glass rounded-[40px] p-6 md:p-10 border border-white/10 hover:bg-white/5 transition-colors">
-                <h3 class="text-2xl md:text-3xl font-semibold mb-4 font-heading italic">AI Systems</h3>
-                <p class="text-white/70 text-sm md:text-lg leading-relaxed">We architect robust LLM integrations, retrieval-augmented generation (RAG) chatbots, complex automation workflows, and specialized AI platforms tailored for enterprise needs.</p>
-              </div>
-              <div class="liquid-glass rounded-[40px] p-6 md:p-10 border border-white/10 hover:bg-white/5 transition-colors">
-                <h3 class="text-2xl md:text-3xl font-semibold mb-4 font-heading italic">Web & Mobile</h3>
-                <p class="text-white/70 text-sm md:text-lg leading-relaxed">From highly scalable, SEO-optimized SaaS platforms to cross-platform mobile applications, we build digital products that captivate and convert.</p>
-              </div>
-              <div class="liquid-glass rounded-[40px] p-6 md:p-10 border border-white/10 hover:bg-white/5 transition-colors">
-                <h3 class="text-2xl md:text-3xl font-semibold mb-4 font-heading italic">Cloud & Backend</h3>
-                <p class="text-white/70 text-sm md:text-lg leading-relaxed">Secure, serverless architectures, robust APIs, microservices, and seamless CI/CD pipelines engineered for massive scale and perfect uptime.</p>
-              </div>
-              <div class="liquid-glass rounded-[40px] p-6 md:p-10 border border-white/10 hover:bg-white/5 transition-colors">
-                <h3 class="text-2xl md:text-3xl font-semibold mb-4 font-heading italic">UI/UX & 3D</h3>
-                <p class="text-white/70 text-sm md:text-lg leading-relaxed">We push the boundaries of digital interaction, combining sleek premium interfaces, liquid-smooth motion, and interactive 3D web environments.</p>
-              </div>
+        <!-- Section 1: Services -->
+        <div id="content-1" class="kiosk-slide hidden-next">
+          <h2 class="services-title">What We Build</h2>
+          <div class="services-grid">
+            <div class="service-card liquid-glass">
+              <h3>AI Systems</h3>
+              <p>LLM integrations, RAG chatbots, automation workflows, and specialized AI platforms for enterprise.</p>
+            </div>
+            <div class="service-card liquid-glass">
+              <h3>Web &amp; Mobile</h3>
+              <p>Scalable SaaS platforms and cross-platform mobile apps that captivate and convert.</p>
+            </div>
+            <div class="service-card liquid-glass">
+              <h3>Cloud &amp; Backend</h3>
+              <p>Serverless architectures, APIs, microservices, and CI/CD pipelines for massive scale.</p>
+            </div>
+            <div class="service-card liquid-glass">
+              <h3>UI/UX &amp; 3D</h3>
+              <p>Premium interfaces, liquid-smooth motion, and interactive 3D web environments.</p>
             </div>
           </div>
         </div>
 
-        <!-- Socials Content (Section 2) -->
-        <div id="content-2" class="kiosk-slide absolute inset-0 w-full h-full p-6 md:p-10 flex flex-col justify-center transition-all duration-[1200ms] ease-[cubic-bezier(0.76,0,0.24,1)] opacity-0 translate-y-24 pointer-events-none">
-          <div class="w-full h-full flex flex-col md:flex-row md:items-center md:justify-between gap-8 md:gap-12">
-            <div class="md:max-w-md">
-              <h2 class="font-heading italic text-4xl md:text-6xl mb-4 md:mb-6">Connect with Alphintra</h2>
-              <p class="text-white/70 text-lg md:text-xl leading-relaxed">Follow us and start your digital product journey. Our AI assistant is always ready to talk.</p>
-            </div>
-            <div class="flex flex-wrap gap-4 md:justify-end">
-              <a href="https://wa.me/94740886002" target="_blank" rel="noopener noreferrer" class="liquid-glass rounded-full px-6 py-3 md:px-8 md:py-4 hover:bg-white/10 transition-colors text-sm md:text-lg font-medium border border-white/20">WhatsApp</a>
-              <a href="https://linkedin.com/company/alphintra" target="_blank" rel="noopener noreferrer" class="liquid-glass rounded-full px-6 py-3 md:px-8 md:py-4 hover:bg-white/10 transition-colors text-sm md:text-lg font-medium border border-white/20">LinkedIn</a>
-              <a href="https://web.facebook.com/profile.php?id=61589295980353" target="_blank" rel="noopener noreferrer" class="liquid-glass rounded-full px-6 py-3 md:px-8 md:py-4 hover:bg-white/10 transition-colors text-sm md:text-lg font-medium border border-white/20">Facebook</a>
-              <a href="https://instagram.com/alphintra" target="_blank" rel="noopener noreferrer" class="liquid-glass rounded-full px-6 py-3 md:px-8 md:py-4 hover:bg-white/10 transition-colors text-sm md:text-lg font-medium border border-white/20">Instagram</a>
-              <a href="https://x.com/alphintra_ai" target="_blank" rel="noopener noreferrer" class="liquid-glass rounded-full px-6 py-3 md:px-8 md:py-4 hover:bg-white/10 transition-colors text-sm md:text-lg font-medium border border-white/20">X</a>
+        <!-- Section 2: Socials -->
+        <div id="content-2" class="kiosk-slide hidden-next" style="justify-content:center;">
+          <div>
+            <h2 class="socials-title">Connect with Alphintra</h2>
+            <p class="socials-sub">Follow us and start your digital product journey. Our AI assistant is always ready to talk.</p>
+            <div class="socials-links">
+              <a href="https://wa.me/94740886002" target="_blank" rel="noopener" class="social-link">WhatsApp</a>
+              <a href="https://linkedin.com/company/alphintra" target="_blank" rel="noopener" class="social-link">LinkedIn</a>
+              <a href="https://web.facebook.com/profile.php?id=61589295980353" target="_blank" rel="noopener" class="social-link">Facebook</a>
+              <a href="https://instagram.com/alphintra" target="_blank" rel="noopener" class="social-link">Instagram</a>
+              <a href="https://x.com/alphintra_ai" target="_blank" rel="noopener" class="social-link">X / Twitter</a>
             </div>
           </div>
         </div>
 
-        <!-- CTA Content (Section 3) -->
-        <div id="content-3" class="kiosk-slide absolute inset-0 w-full h-full p-6 md:p-10 flex flex-col justify-center transition-all duration-[1200ms] ease-[cubic-bezier(0.76,0,0.24,1)] opacity-0 translate-y-24 pointer-events-none">
-          <div class="w-full text-center relative z-10">
-            <h2 class="font-heading italic text-5xl md:text-8xl mb-6 md:mb-8 drop-shadow-2xl">Ready to Build?</h2>
-            <p class="text-lg md:text-2xl text-white/90 mb-8 md:mb-12 drop-shadow-lg font-medium max-w-2xl mx-auto">
-              Join the startups and enterprises architecting next-generation platforms with Alphintra.
-            </p>
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mt-8 md:mt-12">
-              <button onclick="openChatbot('Let\'s start a project')" class="liquid-glass-strong rounded-full px-8 py-4 md:px-12 md:py-5 text-white font-semibold text-base md:text-lg hover:bg-white/20 transition-colors shadow-2xl border border-white/30">
-                Start Your Project
-              </button>
-              <a href="https://alphintra.com" target="_blank" class="liquid-glass rounded-full px-8 py-4 md:px-12 md:py-5 text-white font-semibold text-base md:text-lg hover:bg-white/10 transition-colors border border-white/20">
-                Visit our page
-              </a>
+        <!-- Section 3: CTA -->
+        <div id="content-3" class="kiosk-slide hidden-next" style="justify-content:center;">
+          <div class="cta-wrap">
+            <h2 class="cta-title">Ready to Build?</h2>
+            <p class="cta-sub">Join the startups and enterprises architecting next-generation platforms with Alphintra.</p>
+            <div class="cta-btns">
+              <button class="btn-cta-primary liquid-glass-strong" onclick="openChatbot('Let\'s start a project')">Start Your Project</button>
+              <a href="https://alphintra.com" target="_blank" class="btn-cta-secondary">Visit our page</a>
             </div>
           </div>
         </div>
 
-      </div>
-    </div>
-  </div>
+      </div><!-- /slides-area -->
+    </div><!-- /kiosk-window -->
+  </div><!-- /kiosk-outer -->
 
   <!-- Chatbot Container -->
   <div id="chatbot-root"></div>
 
   <!-- Scripts -->
-  <script src="{% static 'js/chatbot.js' %}?v=26"></script>
-  <script src="{% static 'js/scrollytelling.js' %}?v=26"></script>
-  <script type="module" src="{% static 'js/blob-bg.js' %}?v=26"></script>
+  <script src="{% static 'js/chatbot.js' %}?v=46"></script>
+  <script src="{% static 'js/sounds.js' %}?v=46"></script>
+  <script src="{% static 'js/scrollytelling.js' %}?v=46"></script>
+  <script type="module" src="{% static 'js/blob-bg.js' %}?v=46"></script>
 </body>
 </html>

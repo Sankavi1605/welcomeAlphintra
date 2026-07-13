@@ -11,36 +11,16 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
 
     const numberTrack = document.getElementById('section-number-track');
-    const curtain = document.getElementById('page-curtain');
-    const CURTAIN_DURATION = 600; // ms — matches CSS transition duration
-
-    function swapContent(newIndex) {
-        slides.forEach((slide, index) => {
-            if (!slide) return;
-            slide.style.transitionDuration = '0ms'; // instant swap — hidden under curtain
-            if (index === newIndex) {
-                slide.classList.remove('opacity-0', 'pointer-events-none', '-translate-y-24', 'translate-y-24');
-                slide.classList.add('opacity-100', 'translate-y-0');
-            } else {
-                slide.classList.remove('opacity-100', 'translate-y-0');
-                slide.classList.add('opacity-0', 'pointer-events-none');
-            }
-        });
-
-        // Fire blob / 3D background update
-        window.dispatchEvent(new CustomEvent('sectionChanged', { detail: { index: newIndex } }));
-    }
 
     function updateNumberTrack(newIndex) {
         if (!numberTrack) return;
         numberTrack.style.transform = `translateY(-${newIndex * 25}%)`;
         Array.from(numberTrack.children).forEach((child, i) => {
-            if (i === newIndex) {
-                child.classList.remove('text-white/30');
-                child.classList.add('text-white', 'scale-110');
+            child.style.color = i === newIndex ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.25)';
+            if(i === newIndex) {
+                child.style.transform = 'scale(1.1)';
             } else {
-                child.classList.add('text-white/30');
-                child.classList.remove('text-white', 'scale-110');
+                child.style.transform = 'scale(1.0)';
             }
         });
     }
@@ -49,51 +29,37 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!isInitial && newIndex === currentIndex) return;
         if (newIndex < 0 || newIndex >= totalSlides) return;
 
+        if (!isInitial) isAnimating = true;
+
+        slides.forEach((slide, index) => {
+            if (!slide) return;
+            if (isInitial) {
+                slide.style.transitionDuration = '0ms';
+            } else {
+                slide.style.transitionDuration = '600ms';
+            }
+
+            slide.classList.remove('hidden-prev', 'hidden-next', 'active-slide');
+
+            if (index < newIndex) {
+                slide.classList.add('hidden-prev'); // scrolled past it
+            } else if (index > newIndex) {
+                slide.classList.add('hidden-next'); // haven't reached it
+            } else {
+                slide.classList.add('active-slide'); // current
+            }
+        });
+
         currentIndex = newIndex;
         updateNumberTrack(newIndex);
+        window.dispatchEvent(new CustomEvent('sectionChanged', { detail: { index: newIndex } }));
 
-        if (isInitial || !curtain) {
-            // No animation on first load
-            swapContent(newIndex);
-            return;
+        if (!isInitial) {
+            if (window.uiAudio) window.uiAudio.playSlideTransition();
+            setTimeout(() => {
+                isAnimating = false;
+            }, 800); // 0.6s CSS transition + 200ms cooldown to block trackpad inertia
         }
-
-        isAnimating = true;
-
-        // STEP 1 — Drop curtain down (translateY(-100%) → translateY(0))
-        curtain.classList.remove('exit');
-        curtain.classList.add('active');
-
-        // STEP 2 — At transition end, swap content then trigger exit
-        curtain.addEventListener('transitionend', function onCurtainIn() {
-            curtain.removeEventListener('transitionend', onCurtainIn);
-
-            // Swap content while fully covered
-            swapContent(newIndex);
-
-            // Small tick so browser registers the state before animating out
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                    // STEP 3 — Exit curtain downward (translateY(0) → translateY(100%))
-                    curtain.classList.remove('active');
-                    curtain.classList.add('exit');
-
-                    curtain.addEventListener('transitionend', function onCurtainOut() {
-                        curtain.removeEventListener('transitionend', onCurtainOut);
-
-                        // STEP 4 — Reset instantly to top without animation
-                        curtain.style.transition = 'none';
-                        curtain.classList.remove('exit');
-                        // Force reflow
-                        void curtain.offsetHeight;
-                        // Restore transition for next run
-                        curtain.style.transition = '';
-
-                        isAnimating = false;
-                    });
-                });
-            });
-        });
     }
 
     // Expose for nav button onClick handlers
@@ -101,14 +67,39 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!isAnimating) updateSlides(index);
     };
 
-    // Initialize first slide without animation
+    // Initialize first slide
     updateSlides(0, true);
+    setTimeout(() => {
+        slides.forEach(s => s && (s.style.transitionDuration = '600ms'));
+    }, 50);
+
+    // Touch swipe navigation
+    let touchStartY = 0;
+    window.addEventListener('touchstart', (e) => { touchStartY = e.touches[0].clientY; }, { passive: true });
+    window.addEventListener('touchend', (e) => {
+        if (isAnimating) return;
+        const currentSlide = slides[currentIndex];
+        if (!currentSlide) return;
+
+        const dy = touchStartY - e.changedTouches[0].clientY;
+        const isAtTop = currentSlide.scrollTop <= 50;
+        const isAtBottom = Math.ceil(currentSlide.scrollTop + currentSlide.clientHeight) >= currentSlide.scrollHeight - 50;
+
+        if (dy > 30 && isAtBottom)       window.goToSlide(currentIndex + 1);
+        else if (dy < -30 && isAtTop)    window.goToSlide(currentIndex - 1);
+    }, { passive: true });
 
     // Mouse wheel navigation
     window.addEventListener('wheel', (e) => {
         if (isAnimating) return;
-        if (e.deltaY > 40)       window.goToSlide(currentIndex + 1);
-        else if (e.deltaY < -40) window.goToSlide(currentIndex - 1);
+        const currentSlide = slides[currentIndex];
+        if (!currentSlide) return;
+
+        const isAtTop = currentSlide.scrollTop <= 50;
+        const isAtBottom = Math.ceil(currentSlide.scrollTop + currentSlide.clientHeight) >= currentSlide.scrollHeight - 50;
+
+        if (e.deltaY > 15 && isAtBottom)       window.goToSlide(currentIndex + 1);
+        else if (e.deltaY < -15 && isAtTop)    window.goToSlide(currentIndex - 1);
     }, { passive: true });
 
     // Keyboard navigation
@@ -118,3 +109,4 @@ document.addEventListener("DOMContentLoaded", () => {
         if (e.key === 'ArrowUp'   || e.key === 'PageUp')   window.goToSlide(currentIndex - 1);
     });
 });
+
