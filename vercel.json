@@ -1,14 +1,14 @@
 {
   "builds": [
     {
-      "src": "alphintra_site/wsgi.py",
+      "src": "index.py",
       "use": "@vercel/python"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "alphintra_site/wsgi.py"
+      "dest": "index.py"
     }
   ]
 }
