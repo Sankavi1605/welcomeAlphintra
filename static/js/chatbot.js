@@ -283,8 +283,8 @@ closeBtn.addEventListener("click", closeChatbot);
 document.addEventListener("click", (e) => {
   // Play click sound for any button or link
   const clickable = e.target.closest('button, a, .quick-btn, .nav-pill');
-  if (clickable && window.uiSounds) {
-    window.uiSounds.playClick();
+  if (clickable && window.uiAudio) {
+    window.uiAudio.playClick();
   }
 
   const container = document.getElementById("chatbot-container");
@@ -337,7 +337,7 @@ async function handleSend() {
 sendBtn.addEventListener("click", handleSend);
 inputField.addEventListener("keydown", (e) => { 
   if (e.key === "Enter") {
-    if (window.uiSounds) window.uiSounds.playClick();
+    if (window.uiAudio) window.uiAudio.playClick();
     handleSend(); 
   }
 });
