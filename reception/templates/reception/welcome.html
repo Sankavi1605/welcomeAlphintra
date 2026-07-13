@@ -53,7 +53,7 @@
     /* ── Kiosk card ── */
     #kiosk-window {
       width: 100%; height: 100%;
-      max-width: 1300px; max-height: 900px;
+      max-width: 1440px; max-height: 940px;
       display: flex; flex-direction: column;
       position: relative;
       border-radius: clamp(16px, 4vw, 40px);
@@ -253,7 +253,7 @@
 
     /* ── Desktop upgrades (≥768px) ── */
     @media (min-width: 768px) {
-      #kiosk-outer { padding: 32px 200px 32px 32px; }
+      #kiosk-outer { padding: 32px 40px; }
       #main-nav { padding: 24px 40px; }
       #main-nav a { gap: 14px; }
       .nav-logo-icon { height: 54px; }
@@ -421,9 +421,9 @@
   <div id="chatbot-root"></div>
 
   <!-- Scripts -->
-  <script src="{% static 'js/chatbot.js' %}?v=48"></script>
-  <script src="{% static 'js/sounds.js' %}?v=48"></script>
-  <script src="{% static 'js/scrollytelling.js' %}?v=48"></script>
-  <script type="module" src="{% static 'js/blob-bg.js' %}?v=48"></script>
+  <script src="{% static 'js/chatbot.js' %}?v=49"></script>
+  <script src="{% static 'js/sounds.js' %}?v=49"></script>
+  <script src="{% static 'js/scrollytelling.js' %}?v=49"></script>
+  <script type="module" src="{% static 'js/blob-bg.js' %}?v=49"></script>
 </body>
 </html>
