@@ -1,4 +1,4 @@
-const API_URL = "/api/chat/";
+const API_URL = "https://chatbot-backend-452555374554.us-central1.run.app/api/v1/chat";
 
 // Clear any previously stored session that might be invalid
 (function() {
