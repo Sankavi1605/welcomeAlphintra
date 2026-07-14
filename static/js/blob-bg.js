@@ -143,8 +143,8 @@ const blobFragmentShader = `
         finalColor += innerColor * innerBand * 0.5;
         finalColor += vec3(1.0, 0.9, 0.7) * extremeRim * 0.6;
         
-        float voidMask = smoothstep(0.15, 0.45, invFresnel);
-        finalColor *= voidMask;
+        // float voidMask = smoothstep(0.15, 0.45, invFresnel);
+        // finalColor *= voidMask;
         
         float grain = (random(gl_FragCoord.xy * 0.05 + uTime) - 0.5) * 0.1;
         finalColor += grain;
@@ -192,8 +192,8 @@ const layoutTargets = [
     ],
     // Section 3 (CTA): Main blob zoomed in background, other floats around
     [
-        { x: 0.0, y: 0.5, z: -3, s: 2.4 }, // Main
-        { x: 3.0, y: 1.5, z: -4, s: 1.2 }
+        { x: 0.0, y: 0.5, z: -2, s: 3.5 }, // Main
+        { x: 3.0, y: 1.5, z: -3, s: 1.2 }
     ]
 ];
 
