@@ -301,25 +301,27 @@
     }
     .blob-line {
       position: absolute;
-      top: 30px; left: -30px;
+      top: 25px; left: -25px;
       width: 100%; height: 100%;
       border: 3px solid rgba(0,0,0,0.8);
-      border-radius: 46% 54% 40% 60% / 55% 42% 58% 45%;
+      border-radius: 42% 58% 30% 70% / 53% 52% 48% 47%;
+      transform: rotate(-15deg) scale(1.05);
       z-index: 1;
     }
     .blob-solid {
       position: absolute;
-      top: -15px; left: 35px;
+      top: 15px; left: 45px;
       width: 100%; height: 100%;
       background: rgba(40, 120, 255, 0.9); /* Blue color requested */
-      border-radius: 46% 54% 40% 60% / 55% 42% 58% 45%;
+      border-radius: 42% 58% 30% 70% / 53% 52% 48% 47%;
+      transform: rotate(25deg) scale(1.05);
       z-index: 2;
     }
     .blob-image {
       position: absolute;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      border-radius: 46% 54% 40% 60% / 55% 42% 58% 45%;
+      border-radius: 42% 58% 30% 70% / 53% 52% 48% 47%;
       overflow: hidden;
       z-index: 3;
       box-shadow: 0 10px 40px rgba(0,0,0,0.3);
@@ -537,9 +539,9 @@
   <div id="chatbot-root"></div>
 
   <!-- Scripts -->
-  <script src="{% static 'js/chatbot.js' %}?v=66"></script>
-  <script src="{% static 'js/sounds.js' %}?v=66"></script>
-  <script src="{% static 'js/scrollytelling.js' %}?v=66"></script>
-  <script type="module" src="{% static 'js/blob-bg.js' %}?v=66"></script>
+  <script src="{% static 'js/chatbot.js' %}?v=67"></script>
+  <script src="{% static 'js/sounds.js' %}?v=67"></script>
+  <script src="{% static 'js/scrollytelling.js' %}?v=67"></script>
+  <script type="module" src="{% static 'js/blob-bg.js' %}?v=67"></script>
 </body>
 </html>
