@@ -10,6 +10,9 @@ logger = logging.getLogger(__name__)
 def welcome_page(request):
     return render(request, "reception/welcome.html")
 
+def personal_page(request):
+    return render(request, "reception/welcome.html", {"show_profile": True})
+
 @csrf_exempt
 def chat_proxy(request):
     if request.method == "POST":

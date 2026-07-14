@@ -197,6 +197,15 @@ const layoutTargets = [
     ]
 ];
 
+// Dynamically handle the extra profile section
+const slidesCount = document.querySelectorAll('.kiosk-slide').length;
+if (slidesCount === 5) {
+    layoutTargets.splice(1, 0, [
+        { x: -1.0, y: -0.5, z: -1, s: 2.0 }, // Main
+        { x: 2.0, y: 2.5, z: -5, s: 1.6 }
+    ]);
+}
+
 for (let i = 0; i < NUM_BLOBS; i++) {
     const mesh = new THREE.Mesh(blobGeometry, blobMaterial);
     

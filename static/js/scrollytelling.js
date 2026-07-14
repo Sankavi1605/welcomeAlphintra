@@ -1,14 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
     let currentIndex = 0;
-    const totalSlides = 4;
+    const slides = Array.from(document.querySelectorAll('.kiosk-slide'));
+    const totalSlides = slides.length;
     let isAnimating = false;
-
-    const slides = [
-        document.getElementById('content-0'),
-        document.getElementById('content-1'),
-        document.getElementById('content-2'),
-        document.getElementById('content-3')
-    ];
 
     const numberTrack = document.getElementById('section-number-track');
 
