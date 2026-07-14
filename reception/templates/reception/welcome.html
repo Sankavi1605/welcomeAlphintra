@@ -286,22 +286,22 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-      gap: 40px;
-      padding: 40px;
-      max-width: 800px;
+      gap: 60px;
+      padding: 20px;
+      max-width: 1100px;
       width: 100%;
       margin: 0 auto;
     }
     .profile-image-container {
       flex-shrink: 0;
-      width: 280px;
-      height: 280px;
+      width: 320px;
+      height: 320px;
       border-radius: 50%;
       overflow: hidden;
       position: relative;
-      /* Soft fade edges to merge deeply with the glass */
-      mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
-      -webkit-mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
+      /* Soft fade edges to merge deeply with the background */
+      mask-image: radial-gradient(circle at center, black 55%, transparent 100%);
+      -webkit-mask-image: radial-gradient(circle at center, black 55%, transparent 100%);
     }
     .profile-image-container img {
       width: 100%;
@@ -432,14 +432,27 @@
         {% if show_profile %}
         <!-- Section Profile (Dynamic) -->
         <div id="content-profile" class="kiosk-slide hidden-next" style="justify-content:center;">
-          <div class="profile-merged-card liquid-glass">
+          <div class="profile-merged-card">
             <div class="profile-image-container">
               <img src="https://pub-04643188b78b434d8c44735a34b1fe23.r2.dev/me.jpg" alt="Profile Photo">
             </div>
             <div class="profile-details">
-              <h2>Sankavi</h2>
-              <h3>Founder & Lead Engineer</h3>
-              <p>Specializing in full-stack architecture, generative AI workflows, and deeply immersive digital experiences. Let's architect the future of the web together.</p>
+              <h2 style="font-size: 4rem;">Sankavi</h2>
+              <h3 style="font-size: 1.4rem;">Founder & Lead Engineer</h3>
+              <p style="font-size: 1.3rem;">Specializing in full-stack architecture, generative AI workflows, and deeply immersive digital experiences. Building scalable SaaS platforms and interactive 3D web environments to architect the future of the web together.</p>
+              
+              <div class="profile-skills" style="display:flex; gap: 12px; margin-top: 16px; flex-wrap: wrap;">
+                 <span style="background: rgba(255,255,255,0.08); padding: 10px 20px; border-radius: 30px; font-size: 1rem; border: 1px solid rgba(255,255,255,0.15);">React & Next.js</span>
+                 <span style="background: rgba(255,255,255,0.08); padding: 10px 20px; border-radius: 30px; font-size: 1rem; border: 1px solid rgba(255,255,255,0.15);">Python & Django</span>
+                 <span style="background: rgba(255,255,255,0.08); padding: 10px 20px; border-radius: 30px; font-size: 1rem; border: 1px solid rgba(255,255,255,0.15);">Generative AI</span>
+                 <span style="background: rgba(255,255,255,0.08); padding: 10px 20px; border-radius: 30px; font-size: 1rem; border: 1px solid rgba(255,255,255,0.15);">3D WebGL</span>
+                 <span style="background: rgba(255,255,255,0.08); padding: 10px 20px; border-radius: 30px; font-size: 1rem; border: 1px solid rgba(255,255,255,0.15);">Cloud Architecture</span>
+              </div>
+              <div style="margin-top: 24px; display: flex; gap: 24px; align-items: center;">
+                 <a href="https://linkedin.com/company/alphintra" target="_blank" style="color: white; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 4px; font-size: 1.1rem;">LinkedIn</a>
+                 <a href="https://wa.me/94740886002" target="_blank" style="color: white; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 4px; font-size: 1.1rem;">WhatsApp</a>
+                 <button onclick="openChatbot('Tell me more about Sankavi')" style="background: transparent; color: rgba(100,200,255,0.9); border: none; cursor: pointer; font-size: 1.1rem; border-bottom: 1px solid rgba(100,200,255,0.3); padding-bottom: 4px; font-family: inherit;">Ask AI About Me</button>
+              </div>
             </div>
           </div>
         </div>
@@ -503,9 +516,9 @@
   <div id="chatbot-root"></div>
 
   <!-- Scripts -->
-  <script src="{% static 'js/chatbot.js' %}?v=60"></script>
-  <script src="{% static 'js/sounds.js' %}?v=60"></script>
-  <script src="{% static 'js/scrollytelling.js' %}?v=60"></script>
-  <script type="module" src="{% static 'js/blob-bg.js' %}?v=60"></script>
+  <script src="{% static 'js/chatbot.js' %}?v=61"></script>
+  <script src="{% static 'js/sounds.js' %}?v=61"></script>
+  <script src="{% static 'js/scrollytelling.js' %}?v=61"></script>
+  <script type="module" src="{% static 'js/blob-bg.js' %}?v=61"></script>
 </body>
 </html>
