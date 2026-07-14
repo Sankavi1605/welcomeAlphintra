@@ -292,32 +292,47 @@
       width: 100%;
       margin: 0 auto;
     }
-    @keyframes profileBlob {
-      0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-      50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
-      100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-    }
-    .profile-image-container {
-      flex-shrink: 0;
+    .profile-blob-wrapper {
+      position: relative;
       width: 380px;
       height: 380px;
-      position: relative;
-      overflow: hidden;
-      /* Organic "unshaped" blob alignment that slowly morphs */
-      animation: profileBlob 12s ease-in-out infinite;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      flex-shrink: 0;
+      margin-left: 20px;
     }
-    .profile-image-container img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0.9;
+    .blob-line {
+      position: absolute;
+      top: -15px; left: -25px;
+      width: 100%; height: 100%;
+      border: 3px solid rgba(0,0,0,0.8);
+      border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+      z-index: 1;
+    }
+    .blob-solid {
+      position: absolute;
+      top: 15px; left: 25px;
+      width: 100%; height: 100%;
+      background: rgba(40, 120, 255, 0.9); /* Blue color requested */
+      border-radius: 40% 60% 70% 30% / 50% 60% 30% 60%;
+      z-index: 2;
+    }
+    .blob-image {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border-radius: 70% 30% 50% 50% / 30% 50% 70% 40%;
+      overflow: hidden;
+      z-index: 3;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    }
+    .blob-image img {
+      width: 100%; height: 100%; object-fit: cover; opacity: 0.95;
     }
     .profile-details {
       flex: 1;
       display: flex;
       flex-direction: column;
       gap: 16px;
+      z-index: 4;
     }
     .profile-details h2 {
       font-size: 3.5rem;
@@ -435,8 +450,12 @@
         <!-- Section Profile (Dynamic) -->
         <div id="content-profile" class="kiosk-slide hidden-next" style="justify-content:center;">
           <div class="profile-merged-card">
-            <div class="profile-image-container">
-              <img src="https://pub-04643188b78b434d8c44735a34b1fe23.r2.dev/me.jpg" alt="Profile Photo">
+            <div class="profile-blob-wrapper">
+              <div class="blob-line"></div>
+              <div class="blob-solid"></div>
+              <div class="blob-image">
+                <img src="https://pub-04643188b78b434d8c44735a34b1fe23.r2.dev/me.jpg" alt="Profile Photo">
+              </div>
             </div>
             <div class="profile-details">
               <h2 style="font-size: 4rem;">Sankavi</h2>
@@ -518,9 +537,9 @@
   <div id="chatbot-root"></div>
 
   <!-- Scripts -->
-  <script src="{% static 'js/chatbot.js' %}?v=64"></script>
-  <script src="{% static 'js/sounds.js' %}?v=64"></script>
-  <script src="{% static 'js/scrollytelling.js' %}?v=64"></script>
-  <script type="module" src="{% static 'js/blob-bg.js' %}?v=64"></script>
+  <script src="{% static 'js/chatbot.js' %}?v=65"></script>
+  <script src="{% static 'js/sounds.js' %}?v=65"></script>
+  <script src="{% static 'js/scrollytelling.js' %}?v=65"></script>
+  <script type="module" src="{% static 'js/blob-bg.js' %}?v=65"></script>
 </body>
 </html>
