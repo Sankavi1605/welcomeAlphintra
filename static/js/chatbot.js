@@ -376,17 +376,7 @@ function appendMessage(role, content, sources = null) {
     bubble.textContent = content;
   }
 
-  if (sources && sources.length > 0) {
-    const badges = document.createElement("div");
-    badges.style.cssText = "margin-top:10px;margin-left:36px;display:flex;flex-wrap:wrap;gap:6px;";
-    sources.forEach(src => {
-      const badge = document.createElement("span");
-      badge.style.cssText = "font-size:11px;padding:4px 10px;border-radius:12px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);font-weight:500;";
-      badge.textContent = `📚 ${src}`;
-      badges.appendChild(badge);
-    });
-    bubble.appendChild(badges);
-  }
+  // Removed source badges as requested by user
 
   messageContainer.appendChild(bubble);
   messageContainer.scrollTop = messageContainer.scrollHeight;
