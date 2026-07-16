@@ -321,14 +321,19 @@ async function handleSend() {
     console.log("Backend response:", response.status, data);
 
     if (!response.ok) {
-      // Show the actual backend error so we can debug
-      const errMsg = data.error || data.detail || "Unexpected error from server.";
-      appendMessage("assistant", "⚠️ " + errMsg);
+      console.error("Backend error:", data);
+      appendMessage("assistant", "Sorry, I took a little too long to think! Please try asking again.");
       return;
     }
 
     // Handle both {answer: ...} and {detail: ...} shapes
-    const answer = data.answer || data.response || data.detail || "I could not find an answer.";
+    let answer = data.answer || data.response || data.detail || "I could not find an answer.";
+    
+    // Strip markdown codeblocks (like ```md) and bold/italic markers
+    answer = answer.replace(/```[a-zA-Z0-9]*\n?/g, '').replace(/```/g, '');
+    answer = answer.replace(/\*\*/g, '').replace(/(^|[^\w])\*([^\*]+)\*([^\w]|$)/g, '$1$2$3'); // basic strip bold/italics
+    answer = answer.trim();
+
     const sources = data.sources || data.source_documents || null;
     appendMessage("assistant", answer, sources);
 
@@ -339,7 +344,7 @@ async function handleSend() {
 
   } catch (error) {
     typingIndicator.remove();
-    appendMessage("assistant", "Sorry, I'm having trouble connecting right now. Please try again shortly.");
+    appendMessage("assistant", "Sorry, I took a little too long to think! Please try asking again.");
     console.error("Chatbot request failed:", error);
   }
 }
