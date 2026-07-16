@@ -217,15 +217,21 @@
     /* ── Section 2: Socials ── */
     .socials-title {
       font-family: 'Instrument Serif', serif; font-style: italic;
-      font-size: clamp(1.5rem, 6vw, 4rem); margin-bottom: 8px;
+      font-size: clamp(2.5rem, 8vw, 5rem); margin-bottom: 12px;
     }
-    .socials-sub { font-size: clamp(13px, 2.5vw, 18px); color: rgba(255,255,255,0.65); margin-bottom: 20px; }
-    .socials-links { display: flex; flex-wrap: wrap; gap: 8px; }
+    .socials-sub { font-size: clamp(15px, 3vw, 20px); color: rgba(255,255,255,0.7); margin-bottom: 32px; max-width: 800px; margin-inline: auto; }
+    .socials-links { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; }
     .social-link {
-      padding: 8px 18px; border-radius: 999px; font-size: 13px;
+      padding: 12px 28px; border-radius: 999px; font-size: 16px;
       font-family: 'Barlow', sans-serif; color: #fff; text-decoration: none;
       border: 1px solid rgba(255,255,255,0.2);
-      background: rgba(255,255,255,0.03);
+      background: rgba(255,255,255,0.05);
+      transition: all 0.3s ease;
+    }
+    .social-link:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.4);
+      transform: translateY(-2px);
     }
 
     /* ── Section 3: CTA ── */
@@ -278,7 +284,9 @@
       .service-card { border-radius: 40px; padding: 40px; }
       .service-card h3 { font-size: 42px; margin-bottom: 16px; }
       .service-card p { font-size: 18px; line-height: 1.6; }
-      .social-link { padding: 14px 32px; font-size: 16px; }
+      .socials-sub { margin-bottom: 40px; text-align: center; }
+      .socials-links { gap: 24px; justify-content: center; }
+      .social-link { padding: 18px 48px; font-size: 20px; }
       .btn-cta-primary, .btn-cta-secondary { padding: 16px 48px; font-size: 18px; }
     }
     /* ── Profile Merged Card ── */
@@ -506,7 +514,7 @@
 
         <!-- Section 2: Socials -->
         <div id="content-2" class="kiosk-slide hidden-next" style="justify-content:center;">
-          <div>
+          <div style="text-align: center; width: 100%;">
             <h2 class="socials-title">Connect with Alphintra</h2>
             <p class="socials-sub">Follow us and start your digital product journey. Our AI assistant is always ready to talk.</p>
             <div class="socials-links">
@@ -539,9 +547,9 @@
   <div id="chatbot-root"></div>
 
   <!-- Scripts -->
-  <script src="{% static 'js/chatbot.js' %}?v=68"></script>
-  <script src="{% static 'js/sounds.js' %}?v=68"></script>
-  <script src="{% static 'js/scrollytelling.js' %}?v=68"></script>
-  <script type="module" src="{% static 'js/blob-bg.js' %}?v=68"></script>
+  <script src="{% static 'js/chatbot.js' %}?v=69"></script>
+  <script src="{% static 'js/sounds.js' %}?v=69"></script>
+  <script src="{% static 'js/scrollytelling.js' %}?v=69"></script>
+  <script type="module" src="{% static 'js/blob-bg.js' %}?v=69"></script>
 </body>
 </html>
