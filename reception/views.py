@@ -26,7 +26,7 @@ def chat_proxy(request):
                     "Content-Type": "application/json",
                     "Accept": "application/json",
                 },
-                timeout=25
+                timeout=120
             )
             try:
                 response_data = response.json()
