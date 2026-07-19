@@ -55,17 +55,12 @@ styleEl.textContent = `
   }
   
   #chatbot-trigger {
-    background: rgba(255,255,255,0.03);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255,255,255,0.2);
-    box-shadow: 0 0 80px -20px rgba(100,50,255,0.3);
-    transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease, background 0.2s ease;
+    background: transparent;
+    border: none;
+    transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1);
   }
   #chatbot-trigger:hover {
     transform: scale(1.05);
-    background: rgba(255,255,255,0.08);
-    box-shadow: 0 0 100px -10px rgba(100,50,255,0.4);
   }
   
   /* Orb Animation */
@@ -171,20 +166,26 @@ styleEl.textContent = `
     0%, 80%, 100% { transform: scale(0); }
     40% { transform: scale(1); }
   }
+
+  @keyframes floatMsg {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
 `;
 document.head.appendChild(styleEl);
 
 const chatbotRoot = document.getElementById("chatbot-root");
 chatbotRoot.innerHTML = `
-  <div id="chatbot-container" style="position:fixed;bottom:24px;right:24px;z-index:9999;">
+  <div id="chatbot-container" style="position:fixed;bottom:30px;right:30px;z-index:9999;">
 
-    <!-- Trigger FAB (Glassy) -->
-    <button id="chatbot-trigger" style="height:60px;padding:0 24px;border-radius:30px;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;font-weight:600;font-size:16px;color:white;letter-spacing:0.5px;">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 2l3 7 7 3-7 3-3 7-3-7-7-3 7-3z"/>
-      </svg>
-      Alphintra Agent
-    </button>
+    <!-- Trigger FAB (Avatar + Hello Popup) -->
+    <div id="chatbot-trigger" style="position:relative; display:flex; align-items:center; justify-content:flex-end; cursor:pointer;">
+      <div style="position:absolute; right: 100%; top: -5px; margin-right: 16px; background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 10px 20px; border-radius: 20px 20px 0px 20px; font-weight: 500; font-size: 15px; color: #fff; white-space: nowrap; border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 10px 20px rgba(0,0,0,0.3); animation: floatMsg 3s ease-in-out infinite; transform-origin: bottom right;">
+        Hello
+      </div>
+      <div style="width: 95px; height: 95px; border-radius: 9999px !important; overflow: hidden !important; background: url('/static/images/agent_avatar.png?v=3') center/cover no-repeat; border: 0 !important; outline: 0 !important; box-shadow: none !important; transition: transform 0.3s ease;">
+      </div>
+    </div>
 
     <!-- Chat Window (Glassy) -->
     <div id="chatbot-window" class="cb-closed" style="position:absolute;bottom:70px;right:0;width:400px;max-width:calc(100vw - 32px);height:520px;max-height:calc(100vh - 100px);display:flex;flex-direction:column;overflow:hidden;">

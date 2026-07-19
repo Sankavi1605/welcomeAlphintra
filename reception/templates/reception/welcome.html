@@ -6,25 +6,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <title>Alphintra | Digital Engineering</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@400;500;600&family=Quicksand:wght@700&display=swap" rel="stylesheet">
 
   <link href="{% static 'css/output.css' %}?v=20" rel="stylesheet">
+  <link rel="icon" type="image/png" href="https://pub-fb213824e9ea46ca978d90bf0c95ba46.r2.dev/AlphintraRealLogo-removebg-preview%20(1).png">
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
-      font-family: 'Barlow', sans-serif;
       background-color: #000;
       color: #fff;
+      font-family: 'Outfit', sans-serif;
       overflow: hidden;
       height: 100dvh;
       width: 100vw;
     }
-
-    .font-heading { font-family: 'Instrument Serif', serif; }
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 700;
+    }
+    .font-heading { font-family: 'Quicksand', sans-serif; font-weight: 700; }
 
     .liquid-glass {
       background: rgba(255, 255, 255, 0.05);
@@ -81,7 +82,7 @@
     #section-number-track > div {
       height: 160px; display: flex; align-items: center;
       justify-content: flex-end;
-      font-family: 'Instrument Serif', serif; font-style: italic;
+      font-family: 'Quicksand', sans-serif; font-weight: 700; 
       font-size: 7rem; color: rgba(255,255,255,0.3);
       text-shadow: 0 4px 20px rgba(0,0,0,0.5); padding-right: 40px;
     }
@@ -100,12 +101,12 @@
     .nav-pill {
       background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2);
       border-radius: 999px; padding: 6px 14px; color: #fff; font-size: 12px;
-      font-family: 'Barlow', sans-serif; cursor: pointer;
+      font-family: 'Outfit', sans-serif; cursor: pointer;
     }
     .nav-pill-outline {
       background: transparent; border: 1px solid rgba(255,255,255,0.2);
       border-radius: 999px; padding: 6px 14px; color: #fff; font-size: 12px;
-      font-family: 'Barlow', sans-serif; cursor: pointer;
+      font-family: 'Outfit', sans-serif; cursor: pointer;
     }
 
     /* ── Slides container ── */
@@ -150,9 +151,10 @@
       color: rgba(255,255,255,0.8); margin-bottom: 10px;
     }
     .hero-title {
-      font-family: 'Instrument Serif', serif; font-style: italic;
-      font-size: clamp(2rem, 8vw, 5rem); line-height: 1; color: #fff;
-      margin-bottom: 10px;
+      font-family: 'Instrument Serif', serif; font-style: italic; font-weight: normal;
+      font-size: clamp(3rem, 10vw, 7rem); line-height: 0.9; color: #fff;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
     }
     .hero-sub {
       font-size: clamp(12px, 3vw, 16px); color: rgba(255,255,255,0.8);
@@ -161,12 +163,12 @@
     .hero-btns { display: flex; flex-wrap: wrap; gap: 10px; }
     .btn-primary {
       padding: 10px 20px; border-radius: 999px; font-size: 13px;
-      font-family: 'Barlow', sans-serif; color: #fff; cursor: pointer;
+      font-family: 'Outfit', sans-serif; color: #fff; cursor: pointer;
       border: none; font-weight: 500;
     }
     .btn-secondary {
       padding: 10px 20px; border-radius: 999px; font-size: 13px;
-      font-family: 'Barlow', sans-serif; color: #fff; cursor: pointer;
+      font-family: 'Outfit', sans-serif; color: #fff; cursor: pointer;
       border: 1px solid rgba(255,255,255,0.2); background: transparent; font-weight: 500;
     }
     .receptionist-card {
@@ -175,7 +177,7 @@
     .ai-avatar {
       width: 48px; height: 48px; border-radius: 50%; background: #fff;
       color: #000; display: flex; align-items: center; justify-content: center;
-      font-family: 'Instrument Serif', serif; font-style: italic;
+      font-family: 'Quicksand', sans-serif; font-weight: 700;
       font-size: 16px; font-weight: 700; flex-shrink: 0;
     }
     .rec-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
@@ -184,7 +186,7 @@
     .quick-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .quick-btn {
       padding: 12px 16px; border-radius: 999px; font-size: 12px;
-      font-family: 'Barlow', sans-serif; color: #fff; cursor: pointer;
+      font-family: 'Outfit', sans-serif; color: #fff; cursor: pointer;
       border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05);
       text-align: left; transition: background 0.2s;
     }
@@ -192,7 +194,7 @@
 
     /* ── Section 1: Services ── */
     .services-title {
-      font-family: 'Instrument Serif', serif; font-style: italic;
+      font-family: 'Quicksand', sans-serif; font-weight: 700;
       font-size: clamp(1.5rem, 6vw, 4.5rem); margin-bottom: 12px;
     }
     .services-grid {
@@ -207,7 +209,7 @@
       background: rgba(255,255,255,0.05);
     }
     .service-card h3 {
-      font-family: 'Instrument Serif', serif; font-style: italic;
+      font-family: 'Quicksand', sans-serif; font-weight: 700;
       font-size: clamp(20px, 3vw, 36px); margin-bottom: 12px; font-weight: 600;
     }
     .service-card p {
@@ -216,14 +218,14 @@
 
     /* ── Section 2: Socials ── */
     .socials-title {
-      font-family: 'Instrument Serif', serif; font-style: italic;
+      font-family: 'Quicksand', sans-serif; font-weight: 700;
       font-size: clamp(2.5rem, 8vw, 5rem); margin-bottom: 12px;
     }
     .socials-sub { font-size: clamp(15px, 3vw, 20px); color: rgba(255,255,255,0.7); margin-bottom: 32px; max-width: 800px; margin-inline: auto; }
     .socials-links { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; }
     .social-link {
       padding: 12px 28px; border-radius: 999px; font-size: 16px;
-      font-family: 'Barlow', sans-serif; color: #fff; text-decoration: none;
+      font-family: 'Outfit', sans-serif; color: #fff; text-decoration: none;
       border: 1px solid rgba(255,255,255,0.2);
       background: rgba(255,255,255,0.05);
       transition: all 0.3s ease;
@@ -237,7 +239,7 @@
     /* ── Section 3: CTA ── */
     .cta-wrap { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px; }
     .cta-title {
-      font-family: 'Instrument Serif', serif; font-style: italic;
+      font-family: 'Quicksand', sans-serif; font-weight: 700;
       font-size: clamp(2rem, 10vw, 6rem); line-height: 1;
     }
     .cta-sub {
@@ -247,12 +249,12 @@
     .cta-btns { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
     .btn-cta-primary {
       padding: 12px 28px; border-radius: 999px; font-size: 14px;
-      font-family: 'Barlow', sans-serif; color: #fff; cursor: pointer;
+      font-family: 'Outfit', sans-serif; color: #fff; cursor: pointer;
       border: 1px solid rgba(255,255,255,0.3); font-weight: 600;
     }
     .btn-cta-secondary {
       padding: 12px 28px; border-radius: 999px; font-size: 14px;
-      font-family: 'Barlow', sans-serif; color: #fff; cursor: pointer;
+      font-family: 'Outfit', sans-serif; color: #fff; cursor: pointer;
       border: 1px solid rgba(255,255,255,0.2); background: transparent;
       font-weight: 600; text-decoration: none;
     }
@@ -266,7 +268,7 @@
       .nav-logo-text  { height: 32px; }
       .nav-mobile { display: none !important; }
       .nav-desktop { display: flex !important; align-items: center; gap: 24px; font-size: 14px; color: rgba(255,255,255,0.8); }
-      .nav-desktop button { background: none; border: none; color: inherit; cursor: pointer; font-family: 'Barlow', sans-serif; }
+      .nav-desktop button { background: none; border: none; color: inherit; cursor: pointer; font-family: 'Outfit', sans-serif; }
       .nav-desktop .nav-pill { font-size: 14px; padding: 8px 20px; border: 1px solid rgba(255,255,255,0.2); border-radius: 999px; }
       .kiosk-slide { padding: 40px 60px; }
       .hero-grid { flex-direction: row; align-items: center; justify-content: space-between; }
@@ -346,8 +348,8 @@
     }
     .profile-details h2 {
       font-size: 3.5rem;
-      font-family: 'Instrument Serif', serif;
-      font-style: italic;
+      font-family: 'Quicksand', sans-serif; font-weight: 700;
+      
       margin: 0;
       line-height: 1.1;
       background: linear-gradient(to right, #fff, rgba(255,255,255,0.7));
@@ -415,13 +417,13 @@
         <!-- Mobile nav -->
         <div class="nav-mobile">
           <button class="nav-pill-outline" onclick="window.goToSlide({% if show_profile %}2{% else %}1{% endif %})">Services</button>
-          <button class="nav-pill" onclick="openChatbot()">Chat</button>
+          <button class="nav-pill" onclick="window.open('https://wa.me/94740886002', '_blank')">Chat</button>
         </div>
         <!-- Desktop nav -->
         <div class="nav-desktop">
           <button onclick="window.goToSlide({% if show_profile %}2{% else %}1{% endif %})">Services</button>
           <button onclick="window.goToSlide({% if show_profile %}3{% else %}2{% endif %})">Socials</button>
-          <button class="nav-pill" onclick="openChatbot()">Chat Now</button>
+          <button class="nav-pill" onclick="window.open('https://wa.me/94740886002', '_blank')">Chat Now</button>
         </div>
       </nav>
 
@@ -432,8 +434,7 @@
         <div id="content-0" class="kiosk-slide">
           <div class="hero-grid">
             <div class="hero-left">
-              <div class="hero-badge liquid-glass">AI Receptionist Online</div>
-              <h1 class="hero-title">Welcome to<br>Alphintra</h1>
+              <h1 class="hero-title">Welcome<br>to<br>Alphintra</h1>
               <p class="hero-sub">Your intelligent digital receptionist for AI, Web, Mobile, Cloud, Backend, UI/UX, and 3D Engineering.</p>
               <div class="hero-btns">
                 <button class="btn-primary liquid-glass-strong" onclick="openChatbot()">Start a Conversation</button>
@@ -442,7 +443,6 @@
             </div>
             <div class="receptionist-card liquid-glass">
               <div class="rec-header">
-                <div class="ai-avatar">AI</div>
                 <div class="rec-name">Alphintra Assistant</div>
               </div>
               <p class="rec-desc">Hi, welcome to Alphintra. I can help you explore our services, start a project discussion, or answer questions about our company.</p>
@@ -547,7 +547,7 @@
   <div id="chatbot-root"></div>
 
   <!-- Scripts -->
-  <script src="{% static 'js/chatbot.js' %}?v=71"></script>
+  <script src="{% static 'js/chatbot.js' %}?v=80"></script>
   <script src="{% static 'js/sounds.js' %}?v=71"></script>
   <script src="{% static 'js/scrollytelling.js' %}?v=71"></script>
   <script type="module" src="{% static 'js/blob-bg.js' %}?v=71"></script>

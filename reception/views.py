@@ -13,6 +13,9 @@ def welcome_page(request):
 def personal_page(request):
     return render(request, "reception/welcome.html", {"show_profile": True})
 
+def custom_404(request, exception):
+    return render(request, "reception/404.html", status=404)
+
 @csrf_exempt
 def chat_proxy(request):
     if request.method == "POST":
