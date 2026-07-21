@@ -72,6 +72,10 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener('touchstart', (e) => { touchStartY = e.touches[0].clientY; }, { passive: true });
     window.addEventListener('touchend', (e) => {
         if (isAnimating) return;
+        
+        // Ignore scrolls inside chatbot window
+        if (e.target.closest && e.target.closest('#chatbot-window')) return;
+
         const currentSlide = slides[currentIndex];
         if (!currentSlide) return;
 
@@ -86,6 +90,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // Mouse wheel navigation
     window.addEventListener('wheel', (e) => {
         if (isAnimating) return;
+        
+        // Ignore scrolls inside chatbot window
+        if (e.target.closest && e.target.closest('#chatbot-window')) return;
+
         const currentSlide = slides[currentIndex];
         if (!currentSlide) return;
 

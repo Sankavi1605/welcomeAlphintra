@@ -464,25 +464,23 @@
               <div class="blob-line"></div>
               <div class="blob-solid"></div>
               <div class="blob-image">
-                <img src="https://pub-04643188b78b434d8c44735a34b1fe23.r2.dev/me.jpg" alt="Profile Photo">
+                <img src="{{ profile.image }}" alt="Profile Photo">
               </div>
             </div>
             <div class="profile-details">
-              <h2 style="font-size: 4rem;">Sankavi</h2>
-              <h3 style="font-size: 1.4rem;">Frontend developer and Secretary of Alphintra</h3>
-              <p style="font-size: 1.3rem;">Specializing in full-stack architecture, generative AI workflows, and deeply immersive digital experiences. Building scalable SaaS platforms and interactive 3D web environments to architect the future of the web together.</p>
+              <h2 style="font-size: clamp(2rem, 6vw, 4rem);">{{ profile.name }}</h2>
+              <h3 style="font-size: 1.4rem;">{{ profile.title }}</h3>
+              <p style="font-size: 1.3rem;">{{ profile.description|safe }}</p>
               
               <div class="profile-skills" style="display:flex; gap: 12px; margin-top: 16px; flex-wrap: wrap;">
-                 <span style="background: rgba(255,255,255,0.08); padding: 10px 20px; border-radius: 30px; font-size: 1rem; border: 1px solid rgba(255,255,255,0.15);">React & Next.js</span>
-                 <span style="background: rgba(255,255,255,0.08); padding: 10px 20px; border-radius: 30px; font-size: 1rem; border: 1px solid rgba(255,255,255,0.15);">Python & Django</span>
-                 <span style="background: rgba(255,255,255,0.08); padding: 10px 20px; border-radius: 30px; font-size: 1rem; border: 1px solid rgba(255,255,255,0.15);">Generative AI</span>
-                 <span style="background: rgba(255,255,255,0.08); padding: 10px 20px; border-radius: 30px; font-size: 1rem; border: 1px solid rgba(255,255,255,0.15);">3D WebGL</span>
-                 <span style="background: rgba(255,255,255,0.08); padding: 10px 20px; border-radius: 30px; font-size: 1rem; border: 1px solid rgba(255,255,255,0.15);">Cloud Architecture</span>
+                {% for skill in profile.skills %}
+                 <span style="background: rgba(255,255,255,0.08); padding: 10px 20px; border-radius: 30px; font-size: 1rem; border: 1px solid rgba(255,255,255,0.15);">{{ skill }}</span>
+                {% endfor %}
               </div>
               <div style="margin-top: 24px; display: flex; gap: 24px; align-items: center;">
                  <a href="https://linkedin.com/company/alphintra" target="_blank" style="color: white; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 4px; font-size: 1.1rem;">LinkedIn</a>
                  <a href="https://wa.me/94740886002" target="_blank" style="color: white; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 4px; font-size: 1.1rem;">WhatsApp</a>
-                 <button onclick="openChatbot('Tell me more about Sankavi')" style="background: transparent; color: rgba(100,200,255,0.9); border: none; cursor: pointer; font-size: 1.1rem; border-bottom: 1px solid rgba(100,200,255,0.3); padding-bottom: 4px; font-family: inherit;">Ask AI About Me</button>
+                 <button onclick="openChatbot('Tell me more about {{ profile.name }}')" style="background: transparent; color: rgba(100,200,255,0.9); border: none; cursor: pointer; font-size: 1.1rem; border-bottom: 1px solid rgba(100,200,255,0.3); padding-bottom: 4px; font-family: inherit;">Ask AI About Me</button>
               </div>
             </div>
           </div>

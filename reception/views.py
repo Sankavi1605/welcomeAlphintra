@@ -11,7 +11,24 @@ def welcome_page(request):
     return render(request, "reception/welcome.html")
 
 def personal_page(request):
-    return render(request, "reception/welcome.html", {"show_profile": True})
+    profile_data = {
+        "image": "https://pub-04643188b78b434d8c44735a34b1fe23.r2.dev/me.jpg",
+        "name": "Sankavi",
+        "title": "Frontend developer and Secretary of Alphintra",
+        "description": "Specializing in full-stack architecture, generative AI workflows, and deeply immersive digital experiences. Building scalable SaaS platforms and interactive 3D web environments to architect the future of the web together.",
+        "skills": ["React & Next.js", "Python & Django", "Generative AI", "3D WebGL", "Cloud Architecture"]
+    }
+    return render(request, "reception/welcome.html", {"show_profile": True, "profile": profile_data})
+
+def rajendran_page(request):
+    profile_data = {
+        "image": "https://pub-04643188b78b434d8c44735a34b1fe23.r2.dev/WhatsApp%20Image%202026-07-21%20at%2012.19.27.jpeg",
+        "name": "Rajendran Vasanthakumar",
+        "title": "Co-Founder and Director",
+        "description": "Rajendran Vasanthakumar is the Co-Founder and Director of ALPHINTRA, bringing a distinctive leadership perspective shaped by his background in aviation—an industry where precision, discipline, security, and reliability are fundamental. This experience has influenced his approach to technology, emphasizing the development of software that is dependable, secure, and capable of solving real business challenges.<br><br>Driven by a strong entrepreneurial mindset and a deep understanding of business operations, Rajendran recognized the growing gap between the rapid advancement of Artificial Intelligence and the limited access many organizations had to these technologies. His vision is to make enterprise-grade AI and automation solutions accessible, practical, and impactful for businesses of all sizes, enabling organizations to transform operations through intelligent technology.<br><br>As Director, Rajendran leads the company's strategic growth, business development, and long-term vision while fostering partnerships with industry leaders, technology innovators, and global enterprises. He is committed to positioning ALPHINTRA as a globally recognized AI engineering company that delivers world-class automation, enterprise software, and AI solutions built on the principles of quality, security, innovation, and operational excellence.",
+        "skills": ["Years of Experience: 4+ years", "Education: BBA (hons)", "Bsc.AVI (hons)", "LLB (hons)", "Msc IR (hons)", "MBA (R)"]
+    }
+    return render(request, "reception/welcome.html", {"show_profile": True, "profile": profile_data})
 
 def custom_404(request, exception):
     return render(request, "reception/404.html", status=404)
