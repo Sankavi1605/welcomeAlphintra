@@ -259,8 +259,8 @@
       font-weight: 600; text-decoration: none;
     }
 
-    /* ── Desktop upgrades (≥768px) ── */
-    @media (min-width: 768px) {
+    /* ── Desktop upgrades (≥1024px) ── */
+    @media (min-width: 1024px) {
       #kiosk-outer { padding: 32px 40px; }
       #main-nav { padding: 24px 40px; }
       #main-nav a { gap: 14px; }
@@ -291,8 +291,8 @@
       .social-link { padding: 18px 48px; font-size: 20px; }
       .btn-cta-primary, .btn-cta-secondary { padding: 16px 48px; font-size: 18px; }
 
-      .profile-merged-card { flex-direction: row !important; gap: 60px !important; text-align: left !important; }
-      .profile-blob-wrapper { width: 380px !important; height: 380px !important; margin-left: 20px !important; margin: 0 !important; }
+      .profile-merged-card { flex-direction: row !important; gap: 40px !important; text-align: left !important; }
+      .profile-blob-wrapper { width: 320px !important; height: 320px !important; margin-left: 0 !important; margin: 0 !important; }
       .profile-details { align-items: flex-start !important; }
       .profile-skills, .profile-links { justify-content: flex-start !important; }
     }
@@ -464,7 +464,7 @@
 
         {% if show_profile %}
         <!-- Section Profile (Dynamic) -->
-        <div id="content-profile" class="kiosk-slide hidden-next" style="padding-top: 10vh;">
+        <div id="content-profile" class="kiosk-slide hidden-next" style="padding-top: 5vh;">
           <div class="profile-merged-card">
             <div class="profile-blob-wrapper">
               <div class="blob-line"></div>
