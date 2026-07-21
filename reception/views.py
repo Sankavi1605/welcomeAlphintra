@@ -25,7 +25,7 @@ def rajendran_page(request):
         "image": "https://pub-04643188b78b434d8c44735a34b1fe23.r2.dev/WhatsApp%20Image%202026-07-21%20at%2012.19.27.jpeg",
         "name": "Rajendran Vasanthakumar",
         "title": "Co-Founder and Director",
-        "description": "Rajendran Vasanthakumar is the Co-Founder and Director of ALPHINTRA, bringing a distinctive leadership perspective shaped by his background in aviation—an industry where precision, discipline, security, and reliability are fundamental.<br><br>Driven by a strong entrepreneurial mindset, his vision is to make enterprise-grade AI and automation solutions accessible, practical, and impactful for businesses of all sizes. He is committed to positioning ALPHINTRA as a globally recognized AI engineering company built on the principles of quality, security, and innovation.",
+        "description": "Co-Founder and Director of ALPHINTRA with a background in aviation, bringing precision and reliability to technology.<br><br>He is driven to make enterprise-grade AI accessible to all, positioning ALPHINTRA as a global leader in AI engineering built on quality and innovation.",
         "skills": ["Years of Experience: 4+ years", "Education: BBA (hons)", "Bsc.AVI (hons)", "LLB (hons)", "Msc IR (hons)", "MBA (R)"]
     }
     return render(request, "reception/welcome.html", {"show_profile": True, "profile": profile_data})
